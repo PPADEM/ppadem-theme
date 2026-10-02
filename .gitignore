@@ -1,8 +1,9 @@
 .DS_Store
 /.quarto/
 *_files/
-template-website.html
-template-report.html
-template-presentation.html
-
+*.html
+!_extensions/**/*.html
 **/*.quarto_ipynb
+
+# Test installs of the extensions (from `quarto add` inside this repo)
+_extensions/PPADEM/

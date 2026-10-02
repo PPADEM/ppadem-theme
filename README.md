@@ -1,70 +1,86 @@
+<p align="center">
+  <img src="logo.png" alt="PPADEM logo" width="220">
+</p>
+
 # PPADEM Quarto Theme
 
-Quarto theme for the PPADEM project. Provides:
+Quarto themes and starter templates for the PPADEM project. Three themes are included:
 
-- A **website** theme (`ppadem-theme-html`) for Quarto project sites — the `cosmo`
-  Bootswatch theme plus a `styles.css` override, same structure as before, just
-  recolored to the official PPADEM brand palette.
-- A **report** theme (`ppadem-report-html`) for standalone, self-contained HTML reports
-  with a numbered-section layout and a cover-style title block.
-- A **presentation** theme (`ppadem-presentation-revealjs`) for Reveal.js slide decks
-  with brand title styling, embedded logo, card blocks, badges, and clean color accents.
+| Format | Use it for | Format name |
+| --- | --- | --- |
+| **Website** | Quarto project sites | `ppadem-theme-html` |
+| **Report** | Standalone, self-contained HTML reports with numbered sections and a cover-style title block | `ppadem-report-html` |
+| **Presentation** | Reveal.js slide decks with brand title styling, embedded logo, cards and badges | `ppadem-presentation-revealjs` |
 
-All three are built on the official PPADEM brand palette (red `#990000`, teal `#298c8c`,
+All three use the official PPADEM brand palette (red `#990000`, teal `#298c8c`,
 gold `#f1a226`, grey `#b8b8b8`) and the PPADEM logo.
 
-## Install
+## Quick start
 
-For an existing project:
+You need [Quarto](https://quarto.org/docs/get-started/) (1.3 or later) installed.
+
+1. **Install the themes** into your project folder:
+
+   ```bash
+   quarto add PPADEM/ppadem-theme
+   ```
+
+   This adds `_extensions/ppadem-theme/`, `_extensions/ppadem-report/` and
+   `_extensions/ppadem-presentation/` to your project. To pick up later theme changes,
+   run the same command again.
+
+2. **Start from a template** (optional, see below), or add a `format:` line to any
+   `.qmd` file.
+
+3. **Render**:
+
+   ```bash
+   quarto render my-report.qmd
+   ```
+
+## Templates
+
+Starter documents live in [`_extensions/templates/`](_extensions/templates/):
+
+| Template | Format |
+| --- | --- |
+| `report.qmd` | Report |
+| `presentation.qmd` | Presentation |
+| `website.qmd` | Website |
+
+Each one is a worked example that shows the layout and components for its format.
+Replace the text with your own content.
+
+Download a template without cloning the repo:
 
 ```bash
-quarto add PPADEM/ppadem-theme
+curl -O https://raw.githubusercontent.com/PPADEM/ppadem-theme/main/_extensions/templates/report.qmd
 ```
 
-This installs all three extensions (`_extensions/ppadem-theme/`, `_extensions/ppadem-report/`, and `_extensions/ppadem-presentation/`).
-
-## Start from a template
-
-To start a new project with a ready-made starter document, run this in an empty directory:
+Change `report.qmd` to `presentation.qmd` or `website.qmd` for the others. If you have
+already run `quarto add`, copy the template from your project instead:
 
 ```bash
-quarto use template PPADEM/ppadem-theme
+cp _extensions/templates/report.qmd my-report.qmd
 ```
 
-This installs the extensions and copies in a starter `.qmd`. Each extension ships its own
-`template.qmd` (website, report, presentation); if Quarto only offers one, copy the one you
-want from `_extensions/<name>/template.qmd` and set its `format:` as shown below.
+The `templates` folder starts with an underscore, so Quarto ignores it when you run
+`quarto render` on a project. The templates are never rendered by accident.
 
-## Usage
+## Using a theme without a template
 
-In the YAML front matter of a `.qmd`:
+Set the format in the YAML front matter of any `.qmd` file:
 
-```md
+```yaml
 ---
-title: Untitled
-format: ppadem-theme-html
----
-```
-
-or, for a report:
-
-```md
----
-title: Untitled
+title: My document
 format: ppadem-report-html
 ---
 ```
 
-or, for a presentation:
+Use `ppadem-theme-html` for a website page or `ppadem-presentation-revealjs` for slides.
 
-```md
----
-title: Untitled
-format: ppadem-presentation-revealjs
----
-```
-
-You can also override the format at the command line:
+You can also choose the format when you render:
 
 ```bash
 quarto render document.qmd --to ppadem-theme-html
@@ -74,20 +90,27 @@ quarto render document.qmd --to ppadem-presentation-revealjs
 
 ## Components
 
-The website and presentation themes include reusable content classes ported from the official PPADEM brand design, usable in any `.qmd` fenced div:
+The website and presentation themes include reusable content classes from the PPADEM
+brand design. Use them in a fenced div in any `.qmd`:
 
-- `.ppadem-hero` / `.ppadem-pill` — page hero banner and pill label.
-- `.ppadem-highlights-strip` / `.ppadem-highlight-tag` (with optional `.teal` / `.gold`
-  modifiers) — stat badges strip.
-- `.ppadem-card-grid` / `.ppadem-card` / `.card-link` — card grid with a link.
-- `.workstream-grid` / `.workstream-item` (with optional `.teal` / `.gold` modifiers) /
-  `.workstream-num` / `.workstream-title` / `.workstream-desc` — numbered workstream grid.
-- `.highlight-teal` / `.highlight-gold` / `.highlight-red` — inline color highlights.
-- `.placeholder-box` — dashed placeholder box for in-progress sections.
+```md
+::: {.ppadem-card-grid}
+...
+:::
+```
 
-See `_extensions/ppadem-theme/template.qmd` (website), `_extensions/ppadem-report/template.qmd`, and `_extensions/ppadem-presentation/template.qmd` for worked examples of each format.
+- `.ppadem-hero` / `.ppadem-pill`: page hero banner and pill label.
+- `.ppadem-highlights-strip` / `.ppadem-highlight-tag` (optional `.teal` / `.gold`):
+  stat badges strip.
+- `.ppadem-card-grid` / `.ppadem-card` / `.card-link`: card grid with a link.
+- `.workstream-grid` / `.workstream-item` (optional `.teal` / `.gold`) /
+  `.workstream-num` / `.workstream-title` / `.workstream-desc`: numbered workstream grid.
+- `.highlight-teal` / `.highlight-gold` / `.highlight-red`: inline colour highlights.
+- `.placeholder-box`: dashed placeholder box for sections in progress.
+
+The templates in `_extensions/templates/` show these in use.
 
 ## License
 
-The source code in this repository is licensed under the MIT License. The PPADEM logo
-is the property of the PPADEM project.
+The source code in this repository is licensed under the MIT License (see [LICENSE](LICENSE)). The PPADEM logo
+is the property of the PPADEM project and is not covered by the MIT licence.
