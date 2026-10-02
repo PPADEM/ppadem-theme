@@ -11,16 +11,15 @@ About the project
 
 # Strengthening political parties across Africa
 
-PPADEM works with political parties, electoral institutions, and civil society
-across the continent to support democratic resilience.
+Political Parties and Democracy in Africa (PPADEM) is an ambitious, collaborative multi-year research project investigating the role of political parties in shaping democracy across Africa, covering 80 political parties across 25 nations.
 :::
 
 ::: {.ppadem-highlights-strip}
 ::: {.ppadem-highlight-tag}
-**12** partner countries
+**25** countries
 :::
 ::: {.ppadem-highlight-tag .teal}
-**30+** partner organizations
+**80** parties
 :::
 ::: {.ppadem-highlight-tag .gold}
 **6** active workstreams

@@ -1,5 +1,5 @@
 ---
-title: "Strengthening Political Parties"
+title: "PPADEM Research"
 subtitle: "PPADEM Project Presentation Template"
 author: "PPADEM Project Team"
 institute: "Political Parties in Africa & Democracy"
@@ -12,7 +12,7 @@ format: ppadem-presentation-revealjs
 
 [About the Project]{.ppadem-pill}
 
-PPADEM works with political parties, electoral institutions, and civil society across Africa to support democratic resilience and political integrity.
+Political Parties and Democracy in Africa (PPADEM) is an ambitious, collaborative multi-year research project investigating the role of political parties in shaping democracy across Africa, covering 80 political parties across 25 nations.
 
 - **Primary Brand Red**: `#990000` (headings, accents)
 - **Secondary Teal**: `#298c8c` (subtitles, secondary metrics)
@@ -23,13 +23,13 @@ PPADEM works with political parties, electoral institutions, and civil society a
 
 ::: {.ppadem-highlights-strip}
 ::: {.ppadem-highlight-tag}
-**12**
-Partner Countries
+**25**
+Countries
 :::
 
 ::: {.ppadem-highlight-tag .teal}
-**30+**
-Partner Organizations
+**80**
+Political Parties
 :::
 
 ::: {.ppadem-highlight-tag .gold}
@@ -38,7 +38,7 @@ Active Workstreams
 :::
 :::
 
-> "Supporting credible institutions and citizen-led engagement across the continent."
+> "Researching & understanding democracy across the African Continent"
 
 ## Core Focus Areas
 
@@ -64,11 +64,11 @@ Direct technical assistance, training workshops, and peer-to-peer dialogues for 
 
 ## Workstreams Overview
 
-| Workstream | Lead Area | Focus |
+| Workstream | Area | Focus |
 |:---|:---|:---|
-| **01. Party Finance** | Governance | Transparency & campaign accountability |
-| **02. Electoral Integrity** | Institutions | Credible and well-administered elections |
-| **03. Civic Engagement** | Inclusion | Youth & women participation in politics |
+| **1** | Governance | Transparency & campaign accountability |
+| **2** | Institutions | Credible and well-administered elections |
+| **3** | Inclusion | Youth & women participation in politics |
 
 : Current thematic priorities {tbl-colwidths="[30,25,45]"}
 
