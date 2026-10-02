@@ -1,0 +1,28 @@
+---
+title: "Annual Programme Report"
+subtitle: "PPADEM — Political Parties in Africa & Democracy"
+author: "PPADEM Project"
+date: last-modified
+format: ppadem-report-html
+---
+
+## Executive Summary
+
+This report summarizes PPADEM's programme activities and outcomes over the
+reporting period.
+
+## Background
+
+PPADEM supports political parties, electoral institutions, and civil society
+organizations across Africa.
+
+## Findings
+
+1. Finding one.
+2. Finding two.
+3. Finding three.
+
+## Recommendations
+
+- Recommendation one.
+- Recommendation two.

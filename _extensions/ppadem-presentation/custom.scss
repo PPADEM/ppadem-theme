@@ -1,0 +1,226 @@
+/*-- scss:defaults --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+// PPADEM brand palette
+$ppadem-red: #990000;
+$ppadem-red-hover: #b30000;
+$ppadem-red-dark: #660000;
+$ppadem-red-soft: #fdf2f2;
+$ppadem-red-border: #f2d0d0;
+
+$ppadem-teal: #298c8c;
+$ppadem-gold: #f1a226;
+$ppadem-grey: #b8b8b8;
+
+$ppadem-gray: #555e68;
+$ppadem-gray-light: #f8f9fa;
+$ppadem-slate: #24292e;
+$ppadem-border: #e5e7eb;
+
+// Reveal.js Theme Variables
+$font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$presentation-font-size-root: 32px;
+$body-bg: #ffffff;
+$body-color: $ppadem-slate;
+$link-color: $ppadem-red;
+$selection-bg: rgba($ppadem-red, 0.2);
+$selection-color: $ppadem-red-dark;
+
+// Headings
+$presentation-heading-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$presentation-heading-color: $ppadem-red-dark;
+$presentation-heading-font-weight: 700;
+
+// Slide Number
+$slide-number-color: $ppadem-grey;
+
+/*-- scss:rules --*/
+
+// Header accent underline on slide titles (h2)
+.reveal h2 {
+  font-size: 1.55em;
+  font-weight: 700;
+  color: $ppadem-red-dark;
+  padding-bottom: 0.35rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid $ppadem-red-soft;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 56px;
+    height: 2px;
+    background-color: $ppadem-red;
+  }
+}
+
+.reveal h3 {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: $ppadem-slate;
+}
+
+// Title Slide Custom Styling
+.reveal .title-slide {
+  text-align: left;
+
+  h1.title {
+    color: $ppadem-red-dark;
+    font-size: 2.3em;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.3em;
+  }
+
+  p.subtitle {
+    color: $ppadem-teal;
+    font-size: 1.15em;
+    font-weight: 500;
+    margin-bottom: 1.5em;
+  }
+
+  .quarto-title-author-name {
+    font-weight: 600;
+    color: $ppadem-slate;
+  }
+
+  .quarto-title-affiliation {
+    color: $ppadem-gray;
+  }
+
+  p.date {
+    color: $ppadem-gray;
+    font-size: 0.85em;
+  }
+}
+
+// Slide Footer & Logo
+.reveal .slide-logo {
+  max-height: 44px !important;
+  bottom: 14px !important;
+  right: 18px !important;
+}
+
+.reveal .footer {
+  font-size: 0.5em;
+  color: $ppadem-grey;
+  bottom: 16px !important;
+}
+
+// Color highlights
+.highlight-teal,
+.teal {
+  color: $ppadem-teal !important;
+}
+
+.highlight-gold,
+.gold {
+  color: $ppadem-gold !important;
+}
+
+.highlight-red,
+.red {
+  color: $ppadem-red !important;
+}
+
+// PPADEM Badge / Pill
+.ppadem-badge,
+.ppadem-pill {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.6em;
+  font-weight: 600;
+  border-radius: 999px;
+  background-color: $ppadem-red-soft;
+  color: $ppadem-red;
+  border: 1px solid $ppadem-red-border;
+  margin-bottom: 0.75rem;
+
+  &.teal {
+    background-color: #e8f5f5;
+    color: $ppadem-teal;
+    border-color: #b2dede;
+  }
+
+  &.gold {
+    background-color: #fef6e9;
+    color: darken($ppadem-gold, 10%);
+    border-color: #fbdca8;
+  }
+}
+
+// Cards for slide grids
+.ppadem-card {
+  background: $ppadem-gray-light;
+  border: 1px solid $ppadem-border;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.05em;
+  }
+
+  p {
+    font-size: 0.85em;
+    margin-bottom: 0;
+    color: $ppadem-gray;
+  }
+}
+
+// Stat badge strips adapted for presentation
+.ppadem-highlights-strip {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+
+  .ppadem-highlight-tag {
+    flex: 1;
+    background: $ppadem-gray-light;
+    border-top: 3px solid $ppadem-red;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    font-size: 0.8em;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+    strong {
+      display: block;
+      font-size: 1.6em;
+      color: $ppadem-red;
+      line-height: 1.2;
+    }
+
+    &.teal {
+      border-top-color: $ppadem-teal;
+      strong { color: $ppadem-teal; }
+    }
+
+    &.gold {
+      border-top-color: $ppadem-gold;
+      strong { color: $ppadem-gold; }
+    }
+  }
+}
+
+// Code blocks
+.reveal pre code {
+  font-size: 0.75em;
+  border-radius: 6px;
+  border: 1px solid $ppadem-border;
+}
+
+// Blockquotes
+.reveal blockquote {
+  border-left: 4px solid $ppadem-teal;
+  background: #f4fbfb;
+  padding: 0.75rem 1.25rem;
+  font-style: normal;
+  box-shadow: none;
+}

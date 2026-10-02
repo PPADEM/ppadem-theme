@@ -1,0 +1,8 @@
+.DS_Store
+/.quarto/
+*_files/
+template-website.html
+template-report.html
+template-presentation.html
+
+**/*.quarto_ipynb

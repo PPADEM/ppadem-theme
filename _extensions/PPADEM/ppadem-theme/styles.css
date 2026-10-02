@@ -4,16 +4,12 @@
    ========================================================================== */
 
 :root {
-  /* Brand Colors from Logo (image001.png) */
-  --ppadem-red: #990000;
-  --ppadem-red-hover: #B30000;
-  --ppadem-red-dark: #660000;
-  --ppadem-red-soft: #FDF2F2;
-  --ppadem-red-border: #F2D0D0;
-
-  --ppadem-teal: #298C8C;
-  --ppadem-gold: #F1A226;
-  --ppadem-grey: #B8B8B8;
+  /* Brand Colors from Logo */
+  --ppadem-red: #8C1D24;
+  --ppadem-red-hover: #A8252A;
+  --ppadem-red-dark: #631217;
+  --ppadem-red-soft: #FDF3F3;
+  --ppadem-red-border: #F3D2D4;
 
   --ppadem-gray: #555E68;
   --ppadem-gray-light: #F8F9FA;
@@ -59,7 +55,7 @@ h2::after {
   left: 0;
   width: 48px;
   height: 2px;
-  background: linear-gradient(90deg, var(--ppadem-red) 0%, var(--ppadem-gold) 100%);
+  background-color: var(--ppadem-red);
 }
 
 a {
@@ -98,7 +94,6 @@ a:hover {
   font-weight: 500;
   padding: 0.45rem 0.85rem !important;
   border-radius: 4px;
-  border-bottom: 2px solid transparent;
   transition: all 0.15s ease;
 }
 
@@ -106,7 +101,6 @@ a:hover {
 .navbar-nav .nav-link.active {
   color: var(--ppadem-red) !important;
   background-color: var(--ppadem-red-soft);
-  border-bottom-color: var(--ppadem-gold);
 }
 
 /* ---------------- Hero Section ---------------- */
@@ -116,18 +110,6 @@ a:hover {
   border-radius: 8px;
   padding: 2.25rem 2rem;
   margin: 1.5rem 0 2rem 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.ppadem-hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--ppadem-red), var(--ppadem-gold), var(--ppadem-teal));
 }
 
 .ppadem-hero-title {
@@ -163,7 +145,7 @@ a:hover {
 .ppadem-highlights-strip {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; /* <-- Add this line */
   gap: 0.75rem;
   margin: 1.25rem 0 2rem 0;
 }
@@ -205,7 +187,7 @@ a:hover {
 
 .ppadem-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(153, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(140, 29, 36, 0.08);
 }
 
 .ppadem-card h3 {
@@ -307,39 +289,4 @@ a:hover {
 
 .nav-footer a:hover {
   color: var(--ppadem-red);
-}
-
-/* ---------------- Optional accent modifiers (teal / gold) ---------------- */
-.ppadem-pill.teal {
-  color: var(--ppadem-teal);
-  border-color: var(--ppadem-teal);
-}
-
-.ppadem-pill.gold {
-  color: var(--ppadem-gold);
-  border-color: var(--ppadem-gold);
-}
-
-.ppadem-highlight-tag.teal strong {
-  color: var(--ppadem-teal);
-}
-
-.ppadem-highlight-tag.gold strong {
-  color: var(--ppadem-gold);
-}
-
-.workstream-item.teal {
-  border-left-color: var(--ppadem-teal);
-}
-
-.workstream-item.teal .workstream-num {
-  color: var(--ppadem-teal);
-}
-
-.workstream-item.gold {
-  border-left-color: var(--ppadem-gold);
-}
-
-.workstream-item.gold .workstream-num {
-  color: var(--ppadem-gold);
 }

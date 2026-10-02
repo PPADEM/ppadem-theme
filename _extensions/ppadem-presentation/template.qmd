@@ -1,0 +1,91 @@
+---
+title: "Strengthening Political Parties"
+subtitle: "PPADEM Project Presentation Template"
+author: "PPADEM Project Team"
+institute: "Political Parties in Africa & Democracy"
+date: today
+date-format: long
+format: ppadem-presentation-revealjs
+---
+
+## Welcome to PPADEM
+
+[About the Project]{.ppadem-pill}
+
+PPADEM works with political parties, electoral institutions, and civil society across Africa to support democratic resilience and political integrity.
+
+- **Primary Brand Red**: `#990000` (headings, accents)
+- **Secondary Teal**: `#298c8c` (subtitles, secondary metrics)
+- **Accent Gold**: `#f1a226` (highlights, badges)
+- **Slate Text**: `#24292e` (clean, accessible reading)
+
+## Key Programme Highlights
+
+::: {.ppadem-highlights-strip}
+::: {.ppadem-highlight-tag}
+**12**
+Partner Countries
+:::
+
+::: {.ppadem-highlight-tag .teal}
+**30+**
+Partner Organizations
+:::
+
+::: {.ppadem-highlight-tag .gold}
+**6**
+Active Workstreams
+:::
+:::
+
+> "Supporting credible institutions and citizen-led engagement across the continent."
+
+## Core Focus Areas
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {.ppadem-card}
+### [Research & Evidence]{.highlight-teal}
+
+Comparative analysis of party system dynamics, party finance frameworks, and electoral laws across jurisdictions.
+:::
+:::
+
+::: {.column width="50%"}
+::: {.ppadem-card}
+### [Capacity Building]{.highlight-gold}
+
+Direct technical assistance, training workshops, and peer-to-peer dialogues for party leaders and election administrators.
+:::
+:::
+
+::::
+
+## Workstreams Overview
+
+| Workstream | Lead Area | Focus |
+|:---|:---|:---|
+| **01. Party Finance** | Governance | Transparency & campaign accountability |
+| **02. Electoral Integrity** | Institutions | Credible and well-administered elections |
+| **03. Civic Engagement** | Inclusion | Youth & women participation in politics |
+
+: Current thematic priorities {tbl-colwidths="[30,25,45]"}
+
+## Code & Data Analysis
+
+```r
+# Visualising party competition indicators
+library(ggplot2)
+
+ggplot(party_data, aes(x = year, y = competitiveness, color = region)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = c("#990000", "#298c8c", "#f1a226")) +
+  theme_minimal()
+```
+
+## Summary & Next Steps
+
+- Finalise field assessments across pilot regions
+- Publish comparative report on party funding regulations
+- Convene annual regional stakeholder policy dialogue

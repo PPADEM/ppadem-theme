@@ -1,0 +1,100 @@
+---
+title: "PPADEM"
+subtitle: "Political Parties in Africa"
+format: ppadem-theme-html
+---
+
+::: {.ppadem-hero}
+::: {.ppadem-pill}
+About the project
+:::
+
+# Strengthening political parties across Africa
+
+PPADEM works with political parties, electoral institutions, and civil society
+across the continent to support democratic resilience.
+:::
+
+::: {.ppadem-highlights-strip}
+::: {.ppadem-highlight-tag}
+**12** partner countries
+:::
+::: {.ppadem-highlight-tag .teal}
+**30+** partner organizations
+:::
+::: {.ppadem-highlight-tag .gold}
+**6** active workstreams
+:::
+:::
+
+## Our Work
+
+::: {.ppadem-card-grid}
+::: {.ppadem-card}
+### Research
+
+Comparative research on party systems and democratic institutions.
+
+[Read more &rarr;](#){.card-link}
+:::
+
+::: {.ppadem-card}
+### Capacity Building
+
+Training and technical assistance for party officials and electoral staff.
+
+[Read more &rarr;](#){.card-link}
+:::
+
+::: {.ppadem-card}
+### Policy Dialogue
+
+Convening policymakers and researchers around shared democratic challenges.
+
+[Read more &rarr;](#){.card-link}
+:::
+:::
+
+## Workstreams
+
+::: {.workstream-grid}
+::: {.workstream-item}
+::: {.workstream-num}
+01
+:::
+::: {.workstream-title}
+Party Finance
+:::
+::: {.workstream-desc}
+Transparency and accountability in political party funding.
+:::
+:::
+
+::: {.workstream-item .teal}
+::: {.workstream-num}
+02
+:::
+::: {.workstream-title}
+Electoral Integrity
+:::
+::: {.workstream-desc}
+Supporting credible, well-administered elections.
+:::
+:::
+
+::: {.workstream-item .gold}
+::: {.workstream-num}
+03
+:::
+::: {.workstream-title}
+Civic Engagement
+:::
+::: {.workstream-desc}
+Strengthening the link between citizens and political parties.
+:::
+:::
+:::
+
+::: {.placeholder-box}
+This section is a placeholder — replace with project-specific content.
+:::
