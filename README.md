@@ -19,46 +19,29 @@ gold `#f1a226`, grey `#b8b8b8`) and the PPADEM logo.
 
 You need [Quarto](https://quarto.org/docs/get-started/) (1.3 or later) installed.
 
-1. **Install the themes** into your project folder:
+1. **Create a project from the starter templates** (recommended). In an empty folder:
+
+   ```bash
+   quarto use template PPADEM/ppadem-theme
+   ```
+
+   This installs the three themes into `_extensions/` and adds `report.qmd`,
+   `presentation.qmd` and `website.qmd` to the folder. Each is a worked example for its
+   format. Delete the ones you don't need and replace the text with your own content.
+
+   **Or install only the themes**, with no starter files:
 
    ```bash
    quarto add PPADEM/ppadem-theme
    ```
 
-   This adds `_extensions/ppadem-theme/`, `_extensions/ppadem-report/` and
-   `_extensions/ppadem-presentation/` to your project. To pick up later theme changes, run the same command again.
+   To pick up later theme changes, run the same command again.
 
-2. **Start from a template** (optional, see below), or add a `format:` line to any
-   `.qmd` file.
-
-3. **Render**:
+2. **Render**:
 
    ```bash
-   quarto render my-report.qmd
+   quarto render report.qmd
    ```
-
-## Templates
-
-Starter documents live in [`templates/`](templates/):
-
-| Template | Format |
-| --- | --- |
-| `report.qmd` | Report |
-| `presentation.qmd` | Presentation |
-| `website.qmd` | Website |
-
-Each one is a worked example that shows the layout and components for its format.
-Replace the text with your own content.
-
-Download a template without cloning the repo:
-
-```bash
-curl -O https://raw.githubusercontent.com/PPADEM/ppadem-theme/main/templates/report.qmd
-```
-
-Change `report.qmd` to `presentation.qmd` or `website.qmd` for the others. 
-The templates are not installed by `quarto add`. They only reference the theme formats,
-so install the themes first (step 1 above).
 
 ## Using a theme without a template
 
@@ -101,7 +84,7 @@ brand design. Use them in a fenced div in any `.qmd`:
 - `.highlight-teal` / `.highlight-gold` / `.highlight-red`: inline colour highlights.
 - `.placeholder-box`: dashed placeholder box for sections in progress.
 
-The templates in `templates/` show these in use.
+The starter templates (`report.qmd`, `presentation.qmd`, `website.qmd`) show these in use.
 
 ## License
 
