@@ -1,0 +1,292 @@
+/* ==========================================================================
+   PPADEM Custom Stylesheet
+   Refined academic identity based on PPADEM Logo & Website Palette
+   ========================================================================== */
+
+:root {
+  /* Brand Colors from Logo */
+  --ppadem-red: #8C1D24;
+  --ppadem-red-hover: #A8252A;
+  --ppadem-red-dark: #631217;
+  --ppadem-red-soft: #FDF3F3;
+  --ppadem-red-border: #F3D2D4;
+
+  --ppadem-gray: #555E68;
+  --ppadem-gray-light: #F8F9FA;
+  --ppadem-slate: #24292E;
+  --ppadem-border: #E5E7EB;
+
+  --ppadem-text: #212529;
+  --ppadem-white: #FFFFFF;
+}
+
+/* ---------------- Typography & Base ---------------- */
+body {
+  color: var(--ppadem-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.65;
+  background-color: #FFFFFF;
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--ppadem-slate);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  color: var(--ppadem-red-dark);
+}
+
+h2 {
+  color: var(--ppadem-slate);
+  font-size: 1.5rem;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--ppadem-red-soft);
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background-color: var(--ppadem-red);
+}
+
+a {
+  color: var(--ppadem-red);
+  text-decoration: none;
+  transition: color 0.15s ease-in-out;
+}
+
+a:hover {
+  color: var(--ppadem-red-hover);
+  text-decoration: underline;
+}
+
+/* ---------------- Navbar ---------------- */
+.navbar {
+  background-color: #FFFFFF !important;
+  border-bottom: 2px solid var(--ppadem-red);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  padding: 0.65rem 1rem;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--ppadem-red) !important;
+  letter-spacing: 0.3px;
+}
+
+.navbar-brand img {
+  max-height: 38px;
+  margin-right: 8px;
+}
+
+.navbar-nav .nav-link {
+  color: var(--ppadem-text) !important;
+  font-weight: 500;
+  padding: 0.45rem 0.85rem !important;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: var(--ppadem-red) !important;
+  background-color: var(--ppadem-red-soft);
+}
+
+/* ---------------- Hero Section ---------------- */
+.ppadem-hero {
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--ppadem-red-soft) 100%);
+  border: 1px solid var(--ppadem-red-border);
+  border-radius: 8px;
+  padding: 2.25rem 2rem;
+  margin: 1.5rem 0 2rem 0;
+}
+
+.ppadem-hero-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--ppadem-red-dark);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.ppadem-hero-subtitle {
+  font-size: 1.15rem;
+  color: var(--ppadem-gray);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.ppadem-pill {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--ppadem-red);
+  background-color: #FFFFFF;
+  border: 1px solid var(--ppadem-red-border);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 0.85rem;
+}
+
+/* ---------------- Stat Badges Strip ---------------- */
+.ppadem-highlights-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* <-- Add this line */
+  gap: 0.75rem;
+  margin: 1.25rem 0 2rem 0;
+}
+
+.ppadem-highlight-tag {
+  background-color: var(--ppadem-gray-light);
+  border: 1px solid var(--ppadem-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--ppadem-slate);
+  font-weight: 500;
+}
+
+.ppadem-highlight-tag strong {
+  color: var(--ppadem-red);
+  font-weight: 700;
+}
+
+/* ---------------- Cards Grid ---------------- */
+.ppadem-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0 2rem 0;
+}
+
+.ppadem-card {
+  background: #FFFFFF;
+  border: 1px solid var(--ppadem-border);
+  border-top: 3px solid var(--ppadem-red);
+  border-radius: 6px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ppadem-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(140, 29, 36, 0.08);
+}
+
+.ppadem-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--ppadem-red-dark);
+}
+
+.ppadem-card p {
+  color: var(--ppadem-gray);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.card-link {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--ppadem-red);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.card-link:hover {
+  color: var(--ppadem-red-hover);
+  text-decoration: underline;
+}
+
+/* ---------------- Workstream Grid (01-06) ---------------- */
+.workstream-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0 2rem 0;
+}
+
+.workstream-item {
+  background: var(--ppadem-gray-light);
+  border: 1px solid var(--ppadem-border);
+  border-left: 3px solid var(--ppadem-red);
+  border-radius: 4px;
+  padding: 1rem 1.15rem;
+}
+
+.workstream-num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ppadem-red);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.workstream-title {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--ppadem-slate);
+  margin-bottom: 0.25rem;
+}
+
+.workstream-desc {
+  font-size: 0.88rem;
+  color: var(--ppadem-gray);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ---------------- Section Placeholder Box ---------------- */
+.placeholder-box {
+  background: var(--ppadem-gray-light);
+  border: 1px dashed var(--ppadem-border);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin: 1rem 0 1.5rem 0;
+  color: var(--ppadem-gray);
+  font-size: 0.95rem;
+}
+
+.placeholder-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------------- Footer ---------------- */
+.nav-footer {
+  background-color: var(--ppadem-gray-light) !important;
+  border-top: 1px solid var(--ppadem-border);
+  font-size: 0.88rem;
+  color: var(--ppadem-gray);
+  padding: 1.5rem 0;
+}
+
+.nav-footer a {
+  color: var(--ppadem-slate);
+}
+
+.nav-footer a:hover {
+  color: var(--ppadem-red);
+}
