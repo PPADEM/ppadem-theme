@@ -1,0 +1,227 @@
+/*-- scss:defaults --*/
+
+// Website-specific layer. Palette, fonts and shared components come from
+// ppadem-brand.scss (generated from _brand/).
+
+$line-height-base: 1.65;
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+// Website flourish: red → gold accent under h2
+$ppadem-accent-bg: linear-gradient(90deg, #990000 0%, #f1a226 100%);
+
+// Navbar
+$navbar-bg: #ffffff;
+$navbar-fg: #212529;
+$navbar-hl: #990000;
+
+// Footer
+$footer-bg: #f8f9fa;
+$footer-fg: #555e68;
+
+/*-- scss:rules --*/
+
+/* ---------------- Typography ---------------- */
+h1, h2, h3, h4, h5 {
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  color: $ppadem-red-dark;
+}
+
+// Section headings only, so the TOC title and other h2s keep their normal style
+main.content > section > h2 {
+  font-size: 1.5rem;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  @include ppadem-h2-accent;
+}
+
+a {
+  transition: color 0.15s ease-in-out;
+}
+
+/* ---------------- Navbar ---------------- */
+.navbar {
+  border-bottom: 2px solid $ppadem-red;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  padding: 0.65rem 1rem;
+}
+
+.navbar-brand,
+.navbar-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: $ppadem-red !important;
+  letter-spacing: 0.3px;
+}
+
+.navbar-brand img,
+.navbar-logo {
+  max-height: 38px;
+  margin-right: 8px;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  padding: 0.45rem 0.85rem !important;
+  border-radius: 4px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+
+  &:hover,
+  &.active {
+    color: $ppadem-red !important;
+    background-color: $ppadem-red-soft;
+    border-bottom-color: $ppadem-gold;
+  }
+}
+
+/* ---------------- Sidebar & TOC ---------------- */
+.sidebar-item .sidebar-link.active,
+.sidebar-item .sidebar-link.active .menu-text {
+  color: $ppadem-red;
+  font-weight: 600;
+}
+
+#TOC .nav-link.active,
+#quarto-margin-sidebar .nav-link.active {
+  color: $ppadem-red;
+}
+
+/* ---------------- Hero & cards (website flourishes) ---------------- */
+.ppadem-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, $ppadem-red, $ppadem-gold, $ppadem-teal);
+}
+
+.ppadem-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($ppadem-red, 0.08);
+  }
+}
+
+/* ---------------- Listing pages (blog / news) ---------------- */
+.quarto-listing .card {
+  border: 1px solid $ppadem-border;
+  border-top: 3px solid $ppadem-red;
+  border-radius: $ppadem-radius;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($ppadem-red, 0.08);
+  }
+
+  .card-title {
+    color: $ppadem-red-dark;
+    font-weight: 700;
+  }
+}
+
+.quarto-listing-category .category,
+.quarto-category {
+  color: $ppadem-red;
+  background-color: $ppadem-red-soft;
+  border: 1px solid $ppadem-red-border;
+  border-radius: 999px;
+}
+
+.quarto-post .listing-title a {
+  color: $ppadem-red-dark;
+}
+
+/* ---------------- Team grid ---------------- */
+// ::: {.ppadem-team-grid}
+// ::: {.ppadem-person}
+// ![](photo.jpg)
+// **Name**
+// Role
+// :::
+// :::
+.ppadem-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0 2rem 0;
+}
+
+.ppadem-person {
+  text-align: center;
+  background: $ppadem-white;
+  border: 1px solid $ppadem-border;
+  border-radius: $ppadem-radius;
+  padding: 1.25rem 1rem;
+  font-size: 0.9rem;
+  color: $ppadem-gray;
+
+  img {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid $ppadem-red-soft;
+    margin-bottom: 0.75rem;
+  }
+
+  p { margin-bottom: 0.25rem; }
+
+  strong {
+    display: block;
+    color: $ppadem-slate;
+    font-size: 1.02rem;
+  }
+}
+
+/* ---------------- Call-to-action banner ---------------- */
+.ppadem-cta {
+  background: $ppadem-red;
+  color: $ppadem-white;
+  border-radius: $ppadem-radius-lg;
+  padding: 1.75rem 2rem;
+  margin: 2rem 0;
+
+  h2, h3 {
+    color: $ppadem-white;
+    margin-top: 0;
+    border: none;
+    &::after { display: none; }
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  a:not(.btn) {
+    color: $ppadem-white;
+    text-decoration: underline;
+  }
+
+  .btn {
+    background: $ppadem-white;
+    color: $ppadem-red;
+    border-color: $ppadem-white;
+    font-weight: 600;
+
+    &:hover { background: $ppadem-red-soft; }
+  }
+
+  &.teal { background: $ppadem-teal; .btn { color: $ppadem-teal; } }
+}
+
+/* ---------------- Footer ---------------- */
+.nav-footer {
+  border-top: 1px solid $ppadem-border;
+  font-size: 0.88rem;
+  padding: 1.5rem 0;
+
+  a { color: $ppadem-slate; }
+  a:hover { color: $ppadem-red; }
+}

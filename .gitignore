@@ -3,7 +3,11 @@
 *_files/
 *.html
 !_extensions/**/*.html
+*.pdf
+*.docx
+!_extensions/**/*.docx
 **/*.quarto_ipynb
+__pycache__/
 
 # Test installs of the extensions (from `quarto add` inside this repo)
 _extensions/PPADEM/

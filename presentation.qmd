@@ -40,6 +40,10 @@ Active Workstreams
 
 > "Researching & understanding democracy across the African Continent"
 
+## Our approach {.ppadem-section}
+
+How PPADEM studies parties, institutions and citizens.
+
 ## Core Focus Areas
 
 :::: {.columns}
@@ -61,6 +65,25 @@ Direct technical assistance, training workshops, and peer-to-peer dialogues for 
 :::
 
 ::::
+
+## Programme Areas
+
+::: {.ppadem-card-grid}
+::: {.ppadem-card}
+### Party Finance
+Transparency in how parties raise and spend money.
+:::
+
+::: {.ppadem-card .teal}
+### Electoral Integrity
+Credible, well-administered elections.
+:::
+
+::: {.ppadem-card .gold}
+### Civic Engagement
+The link between citizens and parties.
+:::
+:::
 
 ## Workstreams Overview
 
@@ -84,8 +107,34 @@ ggplot(party_data, aes(x = year, y = competitiveness, color = region)) +
   theme_minimal()
 ```
 
+## Results so far {.ppadem-section .teal}
+
+## Key Findings
+
+::: {.ppadem-key-findings}
+[Key findings]{.ppadem-label}
+
+1. Party finance rules vary more within regions than between them.
+2. Youth membership is growing fastest where parties run local branches.
+3. Trust in parties tracks perceived electoral integrity.
+:::
+
+::: {.ppadem-quote}
+Parties are where democracy is organised, or where it fails.
+
+[— PPADEM research team]{.attribution}
+:::
+
 ## Summary & Next Steps
 
 - Finalise field assessments across pilot regions
 - Publish comparative report on party funding regulations
 - Convene annual regional stakeholder policy dialogue
+
+## Thank you {.ppadem-closing}
+
+[Questions?]{.ppadem-pill}
+
+**PPADEM Project**
+
+[ppadem.org](https://example.org) · [contact@example.org](mailto:contact@example.org)

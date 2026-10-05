@@ -1,0 +1,83 @@
+---
+title: "Party Finance Transparency in Africa"
+subtitle: "What the evidence says and what to do next"
+author: "PPADEM Project"
+date: today
+date-format: long
+brief-type: "Policy Brief"
+report-number: "No. 1"
+abstract: |
+  A two or three sentence summary of the brief: the problem, the main
+  finding, and the single most important recommendation.
+format: ppadem-brief-typst
+---
+
+::: {.ppadem-highlights-strip}
+::: {.ppadem-highlight-tag}
+**25**
+countries
+:::
+::: {.ppadem-highlight-tag .teal}
+**80**
+political parties
+:::
+::: {.ppadem-highlight-tag .gold}
+**6**
+workstreams
+:::
+:::
+
+## The problem
+
+Explain the policy problem in two or three short paragraphs. Briefs work best
+when every paragraph leads with its point. Use [teal]{.highlight-teal} or
+[gold]{.highlight-gold} highlights sparingly.
+
+## What we found
+
+::: {.ppadem-key-findings}
+[Key findings]{.ppadem-label}
+
+1. Finding one, stated as a complete sentence.
+2. Finding two, with the number that supports it.
+3. Finding three.
+:::
+
+| Region | Countries | Parties |
+|:-------|----------:|--------:|
+| West Africa | 9 | 30 |
+| East Africa | 7 | 22 |
+| Southern Africa | 9 | 28 |
+
+: Coverage by region {#tbl-coverage}
+
+::: {.ppadem-quote}
+Parties are where democracy is organised, or where it fails.
+
+[— PPADEM research team]{.attribution}
+:::
+
+## Recommendations
+
+::: {.ppadem-card-grid}
+::: {.ppadem-card}
+### Governments
+Publish party funding returns in a searchable format.
+:::
+
+::: {.ppadem-card .teal}
+### Electoral bodies
+Audit a random sample of returns each cycle.
+:::
+
+::: {.ppadem-card .gold}
+### Parties
+Adopt internal finance reporting ahead of regulation.
+:::
+:::
+
+::: {.callout-note}
+## About PPADEM
+Political Parties and Democracy in Africa (PPADEM) is a multi-year research
+project covering 80 political parties across 25 nations.
+:::

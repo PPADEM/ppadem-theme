@@ -1,0 +1,471 @@
+/*-- scss:defaults --*/
+// GENERATED from _brand/ppadem-brand.scss by tools/sync-brand.py; edit the source, not this copy.
+
+// ==========================================================================
+// PPADEM shared brand layer
+//
+// The single source of truth for the PPADEM design language. Every HTML-based
+// format (website, report, presentation) loads this file as a theme layer:
+//
+//   theme: [<bootswatch or default>, ppadem-brand.scss, custom.scss]
+//
+// Format-specific rules live in each extension's custom.scss. Because Quarto
+// places later layers' defaults first, custom.scss can override any variable
+// below (they are all !default).
+// ==========================================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+// ---------------- Brand palette ----------------
+$ppadem-red: #990000 !default;
+$ppadem-red-hover: #b30000 !default;
+$ppadem-red-dark: #660000 !default;
+$ppadem-red-soft: #fdf2f2 !default;
+$ppadem-red-border: #f2d0d0 !default;
+
+$ppadem-teal: #298c8c !default;
+$ppadem-teal-dark: #1f6b6b !default;
+$ppadem-teal-soft: #e8f5f5 !default;
+$ppadem-teal-border: #b2dede !default;
+
+$ppadem-gold: #f1a226 !default;
+$ppadem-gold-dark: #b8740b !default;
+$ppadem-gold-soft: #fef6e9 !default;
+$ppadem-gold-border: #fbdca8 !default;
+
+$ppadem-grey: #b8b8b8 !default;
+
+// ---------------- Neutrals ----------------
+$ppadem-gray: #555e68 !default;
+$ppadem-gray-light: #f8f9fa !default;
+$ppadem-slate: #24292e !default;
+$ppadem-border: #e5e7eb !default;
+$ppadem-border-strong: #d1d5db !default;
+$ppadem-text: #212529 !default;
+$ppadem-white: #ffffff !default;
+
+// ---------------- Typography ----------------
+$ppadem-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-sans-serif: $ppadem-font-sans !default;
+
+// ---------------- Shape ----------------
+$ppadem-radius: 6px !default;
+$ppadem-radius-lg: 8px !default;
+$ppadem-accent-width: 48px !default;
+// Background of the short accent bar under h2. Website overrides this with
+// a red → gold gradient.
+$ppadem-accent-bg: $ppadem-red !default;
+
+// ---------------- Bootstrap mappings (ignored by Reveal.js) ----------------
+$primary: $ppadem-red !default;
+$secondary: $ppadem-teal !default;
+$info: $ppadem-teal !default;
+$warning: $ppadem-gold !default;
+$danger: $ppadem-red !default;
+$body-color: $ppadem-text !default;
+$link-color: $ppadem-red !default;
+$link-hover-color: $ppadem-red-hover !default;
+$headings-color: $ppadem-slate !default;
+$headings-font-weight: 700 !default;
+$toc-active-border: $ppadem-red !default;
+$border-color: $ppadem-border !default;
+
+// ---------------- Quarto callouts ----------------
+$callout-color-note: $ppadem-teal !default;
+$callout-color-tip: $ppadem-teal !default;
+$callout-color-warning: $ppadem-gold !default;
+$callout-color-caution: $ppadem-gold !default;
+$callout-color-important: $ppadem-red !default;
+
+/*-- scss:mixins --*/
+
+// Short coloured bar sitting on top of a soft full-width underline.
+@mixin ppadem-h2-accent($width: $ppadem-accent-width, $bg: $ppadem-accent-bg) {
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid $ppadem-red-soft;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: $width;
+    height: 2px;
+    background: $bg;
+  }
+}
+
+/*-- scss:rules --*/
+
+// Expose the palette as CSS custom properties so authors can use
+// var(--ppadem-red) etc. in inline styles and their own CSS.
+:root {
+  --ppadem-red: #{$ppadem-red};
+  --ppadem-red-hover: #{$ppadem-red-hover};
+  --ppadem-red-dark: #{$ppadem-red-dark};
+  --ppadem-red-soft: #{$ppadem-red-soft};
+  --ppadem-red-border: #{$ppadem-red-border};
+  --ppadem-teal: #{$ppadem-teal};
+  --ppadem-teal-soft: #{$ppadem-teal-soft};
+  --ppadem-gold: #{$ppadem-gold};
+  --ppadem-gold-soft: #{$ppadem-gold-soft};
+  --ppadem-grey: #{$ppadem-grey};
+  --ppadem-gray: #{$ppadem-gray};
+  --ppadem-gray-light: #{$ppadem-gray-light};
+  --ppadem-slate: #{$ppadem-slate};
+  --ppadem-border: #{$ppadem-border};
+  --ppadem-text: #{$ppadem-text};
+}
+
+/* ---------------- Small uppercase label ---------------- */
+// e.g. [Key findings]{.ppadem-label} as the first line of a box
+.ppadem-label {
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: $ppadem-red;
+}
+
+/* ---------------- Inline colour highlights ---------------- */
+.highlight-teal { color: $ppadem-teal !important; }
+.highlight-gold { color: $ppadem-gold-dark !important; }
+.highlight-red { color: $ppadem-red !important; }
+
+/* ---------------- Hero ---------------- */
+.ppadem-hero {
+  background: linear-gradient(180deg, $ppadem-white 0%, $ppadem-red-soft 100%);
+  border: 1px solid $ppadem-red-border;
+  border-radius: $ppadem-radius-lg;
+  padding: 2.25rem 2rem;
+  margin: 1.5rem 0 2rem 0;
+  position: relative;
+  overflow: hidden;
+
+  h1 { margin-top: 0; }
+}
+
+.ppadem-hero-title {
+  font-size: 2.1em;
+  font-weight: 800;
+  color: $ppadem-red-dark;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.ppadem-hero-subtitle {
+  font-size: 1.15em;
+  color: $ppadem-gray;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------------- Pill / badge ---------------- */
+.ppadem-pill,
+.ppadem-badge {
+  display: inline-block;
+  font-size: 0.82em;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: $ppadem-red;
+  background-color: $ppadem-white;
+  border: 1px solid $ppadem-red-border;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 0.85rem;
+
+  // A pill written as a fenced div wraps its text in <p>
+  p { margin: 0; }
+
+  &.teal {
+    color: $ppadem-teal;
+    border-color: $ppadem-teal-border;
+  }
+
+  &.gold {
+    color: $ppadem-gold-dark;
+    border-color: $ppadem-gold-border;
+  }
+
+  &.solid {
+    color: $ppadem-white;
+    background-color: $ppadem-red;
+    border-color: $ppadem-red;
+
+    &.teal { background-color: $ppadem-teal; border-color: $ppadem-teal; }
+    &.gold { background-color: $ppadem-gold; border-color: $ppadem-gold; color: $ppadem-slate; }
+  }
+}
+
+/* ---------------- Stat highlights strip ---------------- */
+.ppadem-highlights-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0 2rem 0;
+}
+
+.ppadem-highlight-tag {
+  background-color: $ppadem-gray-light;
+  border: 1px solid $ppadem-border;
+  border-radius: $ppadem-radius;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9em;
+  color: $ppadem-slate;
+  font-weight: 500;
+
+  p { margin: 0; }
+
+  strong {
+    color: $ppadem-red;
+    font-weight: 700;
+  }
+
+  &.teal strong { color: $ppadem-teal; }
+  &.gold strong { color: $ppadem-gold-dark; }
+}
+
+/* ---------------- Card grid ---------------- */
+.ppadem-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0 2rem 0;
+}
+
+.ppadem-card {
+  background: $ppadem-white;
+  border: 1px solid $ppadem-border;
+  border-top: 3px solid $ppadem-red;
+  border-radius: $ppadem-radius;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &.teal { border-top-color: $ppadem-teal; }
+  &.gold { border-top-color: $ppadem-gold; }
+
+  h3 {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: $ppadem-red-dark;
+    border: none;
+  }
+
+  p {
+    color: $ppadem-gray;
+    font-size: 0.95em;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+
+  p:last-child { margin-bottom: 0; }
+}
+
+.card-link {
+  font-weight: 600;
+  font-size: 0.92em;
+  color: $ppadem-red;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  &:hover {
+    color: $ppadem-red-hover;
+    text-decoration: underline;
+  }
+}
+
+/* ---------------- Workstream grid ---------------- */
+.workstream-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0 2rem 0;
+}
+
+.workstream-item {
+  background: $ppadem-gray-light;
+  border: 1px solid $ppadem-border;
+  border-left: 3px solid $ppadem-red;
+  border-radius: 4px;
+  padding: 1rem 1.15rem;
+
+  p { margin: 0; }
+
+  &.teal {
+    border-left-color: $ppadem-teal;
+    .workstream-num { color: $ppadem-teal; }
+  }
+
+  &.gold {
+    border-left-color: $ppadem-gold;
+    .workstream-num { color: $ppadem-gold-dark; }
+  }
+}
+
+.workstream-num {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: $ppadem-red;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.workstream-title {
+  font-size: 1.02em;
+  font-weight: 600;
+  color: $ppadem-slate;
+  margin-bottom: 0.25rem;
+}
+
+.workstream-desc {
+  font-size: 0.88em;
+  color: $ppadem-gray;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ---------------- Key findings ---------------- */
+// Wrap an ordered (or bulleted) list; each item gets a numbered red marker.
+.ppadem-key-findings {
+  background: $ppadem-red-soft;
+  border: 1px solid $ppadem-red-border;
+  border-radius: $ppadem-radius-lg;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0 2rem 0;
+
+  > h3, > h4, .ppadem-label {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: $ppadem-red-dark;
+  }
+
+  ol, ul {
+    list-style: none;
+    counter-reset: ppadem-finding;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  // Flex + baseline keeps the number circle level with the first line of
+  // text at any font size or line height.
+  li {
+    counter-increment: ppadem-finding;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75em;
+    margin-bottom: 0.65rem;
+
+    &:last-child { margin-bottom: 0; }
+
+    &::before {
+      content: counter(ppadem-finding);
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6em;
+      height: 1.6em;
+      border-radius: 50%;
+      background: $ppadem-red;
+      color: $ppadem-white;
+      font-size: 0.85em;
+      font-weight: 700;
+    }
+  }
+
+  &.teal {
+    background: $ppadem-teal-soft;
+    border-color: $ppadem-teal-border;
+    li::before { background: $ppadem-teal; }
+    > h3, > h4, .ppadem-label { color: $ppadem-teal-dark; }
+  }
+}
+
+/* ---------------- Pull quote ---------------- */
+.ppadem-quote {
+  border-left: 4px solid $ppadem-teal;
+  background: $ppadem-teal-soft;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 $ppadem-radius $ppadem-radius 0;
+  font-size: 1.15em;
+  font-weight: 500;
+  color: $ppadem-slate;
+
+  p:last-child { margin-bottom: 0; }
+
+  // Optional attribution line: [— Name, Role]{.attribution}
+  .attribution {
+    display: block;
+    font-size: 0.8em;
+    font-style: normal;
+    font-weight: 600;
+    color: $ppadem-teal-dark;
+    margin-top: 0.5rem;
+  }
+}
+
+blockquote:not(.ppadem-quote) {
+  border-left: 4px solid $ppadem-teal;
+  color: $ppadem-slate;
+}
+
+/* ---------------- Tables ---------------- */
+.ppadem-table table,
+table.ppadem-table {
+  border-collapse: collapse;
+}
+
+.ppadem-table thead th,
+table.ppadem-table thead th,
+.cell-output-display table thead th,
+main table thead th {
+  background-color: $ppadem-red-soft;
+  color: $ppadem-red-dark;
+  font-weight: 700;
+  border-bottom: 2px solid $ppadem-red !important;
+}
+
+.ppadem-table tbody tr:nth-child(even),
+table.ppadem-table tbody tr:nth-child(even) {
+  background-color: $ppadem-gray-light;
+}
+
+/* ---------------- Figures & captions ---------------- */
+figcaption,
+.figure-caption,
+.table-caption {
+  color: $ppadem-gray;
+  font-size: 0.88em;
+}
+
+/* ---------------- Callouts ---------------- */
+.callout {
+  border-radius: $ppadem-radius;
+}
+
+/* ---------------- Placeholder box ---------------- */
+.placeholder-box {
+  background: $ppadem-gray-light;
+  border: 1px dashed $ppadem-border-strong;
+  border-radius: $ppadem-radius;
+  padding: 1.5rem;
+  margin: 1rem 0 1.5rem 0;
+  color: $ppadem-gray;
+  font-size: 0.95em;
+
+  p:last-child { margin-bottom: 0; }
+}
