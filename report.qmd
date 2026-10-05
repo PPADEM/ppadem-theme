@@ -3,26 +3,76 @@ title: "Annual Programme Report"
 subtitle: "PPADEM — Political Parties in Africa & Democracy"
 author: "PPADEM Project"
 date: last-modified
+report-number: "Report 2026-01"
 format: ppadem-report-html
 ---
 
-## Executive Summary
+::: {.ppadem-exec-summary}
+**Executive summary.** This report summarises PPADEM's programme activities and
+outcomes over the reporting period. Replace this paragraph with a short overview
+that a reader could act on without reading further.
+:::
 
-This report summarizes PPADEM's programme activities and outcomes over the
-reporting period.
+::: {.ppadem-highlights-strip}
+::: {.ppadem-highlight-tag}
+**25** countries
+:::
+::: {.ppadem-highlight-tag .teal}
+**80** parties
+:::
+::: {.ppadem-highlight-tag .gold}
+**6** active workstreams
+:::
+:::
 
 ## Background
 
-PPADEM supports political parties, electoral institutions, and civil society
-organizations across Africa.
+PPADEM studies political parties, electoral institutions, and civil society
+organisations across Africa.
+
+::: {.callout-note}
+## About this report
+Callouts use the brand colours: `note` and `tip` are teal, `warning` and
+`caution` are gold, `important` is red.
+:::
 
 ## Findings
+
+::: {.ppadem-key-findings}
+[Key findings]{.ppadem-label}
 
 1. Finding one.
 2. Finding two.
 3. Finding three.
+:::
+
+| Region | Countries | Parties |
+|:-------|----------:|--------:|
+| West Africa | 9 | 30 |
+| East Africa | 7 | 22 |
+| Southern Africa | 9 | 28 |
+
+: Coverage by region {#tbl-coverage}
+
+@tbl-coverage shows coverage by region.
+
+::: {.placeholder-box}
+Figure placeholder: add a chart here with a `#| fig-cap:` label so it can be
+cross-referenced as `@fig-name`.
+:::
+
+::: {.ppadem-quote}
+Parties are where democracy is organised, or where it fails.
+
+[— PPADEM research team]{.attribution}
+:::
 
 ## Recommendations
 
 - Recommendation one.
 - Recommendation two.
+
+## Methodology {.appendix}
+
+Describe data sources and methods here. Sections marked `{.appendix}` are moved
+to the end of the report.

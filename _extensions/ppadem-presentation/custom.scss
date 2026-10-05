@@ -1,61 +1,34 @@
 /*-- scss:defaults --*/
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+// Presentation-specific layer. Palette, fonts and shared components come
+// from ppadem-brand.scss (generated from _brand/). Brand variables are not
+// defined yet in this section (it is emitted before the brand layer), so
+// literal values are used here.
 
-// PPADEM brand palette
-$ppadem-red: #990000;
-$ppadem-red-hover: #b30000;
-$ppadem-red-dark: #660000;
-$ppadem-red-soft: #fdf2f2;
-$ppadem-red-border: #f2d0d0;
-
-$ppadem-teal: #298c8c;
-$ppadem-gold: #f1a226;
-$ppadem-grey: #b8b8b8;
-
-$ppadem-gray: #555e68;
-$ppadem-gray-light: #f8f9fa;
-$ppadem-slate: #24292e;
-$ppadem-border: #e5e7eb;
-
-// Reveal.js Theme Variables
-$font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
 $presentation-font-size-root: 32px;
 $body-bg: #ffffff;
-$body-color: $ppadem-slate;
-$link-color: $ppadem-red;
-$selection-bg: rgba($ppadem-red, 0.2);
-$selection-color: $ppadem-red-dark;
+$body-color: #24292e;
+$selection-bg: rgba(153, 0, 0, 0.2);
+$selection-color: #660000;
 
 // Headings
 $presentation-heading-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-$presentation-heading-color: $ppadem-red-dark;
+$presentation-heading-color: #660000;
 $presentation-heading-font-weight: 700;
 
-// Slide Number
-$slide-number-color: $ppadem-grey;
+// Slide number
+$slide-number-color: #b8b8b8;
 
 /*-- scss:rules --*/
 
-// Header accent underline on slide titles (h2)
+/* ---------------- Headings ---------------- */
 .reveal h2 {
   font-size: 1.55em;
   font-weight: 700;
   color: $ppadem-red-dark;
-  padding-bottom: 0.35rem;
   margin-bottom: 1.25rem;
-  border-bottom: 2px solid $ppadem-red-soft;
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 56px;
-    height: 2px;
-    background-color: $ppadem-red;
-  }
+  @include ppadem-h2-accent($width: 56px);
+  padding-bottom: 0.35rem;
 }
 
 .reveal h3 {
@@ -64,9 +37,21 @@ $slide-number-color: $ppadem-grey;
   color: $ppadem-slate;
 }
 
-// Title Slide Custom Styling
+/* ---------------- Title slide ---------------- */
+.reveal .slides section.quarto-title-block,
 .reveal .title-slide {
   text-align: left;
+  border-left: 6px solid $ppadem-red;
+  padding-left: 1.5rem !important;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 160px;
+    height: 4px;
+    margin-top: 1.5rem;
+    background: linear-gradient(90deg, $ppadem-red 0 33%, $ppadem-gold 33% 66%, $ppadem-teal 66% 100%);
+  }
 
   h1.title {
     color: $ppadem-red-dark;
@@ -88,7 +73,8 @@ $slide-number-color: $ppadem-grey;
     color: $ppadem-slate;
   }
 
-  .quarto-title-affiliation {
+  .quarto-title-affiliation,
+  .quarto-title-institute {
     color: $ppadem-gray;
   }
 
@@ -98,7 +84,60 @@ $slide-number-color: $ppadem-grey;
   }
 }
 
-// Slide Footer & Logo
+/* ---------------- Section divider slides ---------------- */
+// ## Part one {.ppadem-section}          red (default)
+// ## Part two {.ppadem-section .teal}
+// ## Part three {.ppadem-section .gold}
+// The background colour is set by ppadem-slides.lua.
+.reveal .slides section.ppadem-section {
+  text-align: left;
+
+  h2 {
+    color: $ppadem-white;
+    font-size: 2.2em;
+    font-weight: 800;
+    border-bottom-color: rgba($ppadem-white, 0.25);
+
+    &::after { background: $ppadem-white; }
+  }
+
+  &,
+  p,
+  li {
+    color: rgba($ppadem-white, 0.92);
+  }
+
+  &.gold {
+    h2, p, li { color: $ppadem-slate; }
+    h2 { border-bottom-color: rgba($ppadem-slate, 0.2); }
+    h2::after { background: $ppadem-slate; }
+  }
+}
+
+// Hide the logo and footer while a section or closing slide is showing
+.ppadem-section-slide .reveal .slide-logo,
+.ppadem-section-slide .reveal .footer,
+.ppadem-section-slide .reveal .slide-number {
+  display: none !important;
+}
+
+/* ---------------- Closing slide ---------------- */
+// ## Thank you {.ppadem-closing}
+.reveal .slides section.ppadem-closing {
+  text-align: center;
+
+  h2 {
+    font-size: 2.2em;
+    font-weight: 800;
+    display: inline-block;
+    &::after { left: 50%; transform: translateX(-50%); }
+  }
+
+  p { color: $ppadem-gray; }
+  a { font-weight: 600; }
+}
+
+/* ---------------- Footer, logo, progress ---------------- */
 .reveal .slide-logo {
   max-height: 44px !important;
   bottom: 14px !important;
@@ -111,112 +150,117 @@ $slide-number-color: $ppadem-grey;
   bottom: 16px !important;
 }
 
-// Color highlights
-.highlight-teal,
-.teal {
-  color: $ppadem-teal !important;
-}
-
-.highlight-gold,
-.gold {
-  color: $ppadem-gold !important;
-}
-
-.highlight-red,
-.red {
-  color: $ppadem-red !important;
-}
-
-// PPADEM Badge / Pill
-.ppadem-badge,
-.ppadem-pill {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.6em;
-  font-weight: 600;
-  border-radius: 999px;
-  background-color: $ppadem-red-soft;
+.reveal .progress {
   color: $ppadem-red;
-  border: 1px solid $ppadem-red-border;
-  margin-bottom: 0.75rem;
-
-  &.teal {
-    background-color: #e8f5f5;
-    color: $ppadem-teal;
-    border-color: #b2dede;
-  }
-
-  &.gold {
-    background-color: #fef6e9;
-    color: darken($ppadem-gold, 10%);
-    border-color: #fbdca8;
-  }
 }
 
-// Cards for slide grids
-.ppadem-card {
+/* ---------------- Shared components, sized for slides ---------------- */
+.reveal .ppadem-pill,
+.reveal .ppadem-badge {
+  font-size: 0.6em;
+  margin-bottom: 0.75rem;
+}
+
+.reveal .ppadem-card {
   background: $ppadem-gray-light;
-  border: 1px solid $ppadem-border;
-  border-radius: 8px;
   padding: 1rem 1.25rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
   h3 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
     font-size: 1.05em;
+    margin-top: 0;
   }
 
   p {
     font-size: 0.85em;
     margin-bottom: 0;
-    color: $ppadem-gray;
   }
 }
 
-// Stat badge strips adapted for presentation
-.ppadem-highlights-strip {
-  display: flex;
+.reveal .ppadem-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
   margin: 1rem 0;
+}
 
-  .ppadem-highlight-tag {
-    flex: 1;
-    background: $ppadem-gray-light;
-    border-top: 3px solid $ppadem-red;
-    border-radius: 4px;
-    padding: 0.75rem 1rem;
-    font-size: 0.8em;
-    text-align: center;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+// Stat tiles: number stacked above label
+.reveal .ppadem-highlights-strip {
+  flex-wrap: nowrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
 
-    strong {
-      display: block;
-      font-size: 1.6em;
-      color: $ppadem-red;
-      line-height: 1.2;
-    }
+.reveal .ppadem-highlight-tag {
+  flex: 1;
+  border: none;
+  border-top: 3px solid $ppadem-red;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-size: 0.8em;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 
-    &.teal {
-      border-top-color: $ppadem-teal;
-      strong { color: $ppadem-teal; }
-    }
+  strong {
+    display: block;
+    font-size: 1.6em;
+    line-height: 1.2;
+  }
 
-    &.gold {
-      border-top-color: $ppadem-gold;
-      strong { color: $ppadem-gold; }
-    }
+  &.teal { border-top-color: $ppadem-teal; }
+  &.gold { border-top-color: $ppadem-gold; }
+}
+
+.reveal .workstream-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin: 1rem 0;
+}
+
+.reveal .workstream-item {
+  font-size: 0.85em;
+}
+
+.reveal .ppadem-key-findings {
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-size: 0.9em;
+
+  // Reveal numbers every <ol> itself; the circles replace that numbering
+  ol, ul {
+    display: block;
+    list-style: none;
+    margin: 0;
+  }
+
+  .ppadem-label { margin-bottom: 0.5rem; }
+  p { margin: 0 0 0.5rem 0; }
+}
+
+.reveal .ppadem-quote {
+  font-size: 1em;
+}
+
+/* ---------------- Tables ---------------- */
+.reveal table {
+  font-size: 0.75em;
+
+  thead th {
+    background-color: $ppadem-red-soft;
+    color: $ppadem-red-dark;
+    border-bottom: 2px solid $ppadem-red !important;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: $ppadem-gray-light;
   }
 }
 
-// Code blocks
+/* ---------------- Code & quotes ---------------- */
 .reveal pre code {
   font-size: 0.75em;
-  border-radius: 6px;
+  border-radius: $ppadem-radius;
   border: 1px solid $ppadem-border;
 }
 
-// Blockquotes
 .reveal blockquote {
   border-left: 4px solid $ppadem-teal;
   background: #f4fbfb;

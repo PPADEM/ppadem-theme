@@ -1,0 +1,27 @@
+<header id="title-block-header" class="quarto-title-block default page-columns page-full ppadem-report-cover">
+    <div class="quarto-title-banner page-columns page-full">
+        <div class="quarto-title">
+            <img class="ppadem-report-logo" alt="PPADEM" src="data:image/png;base64,{{LOGO_BASE64}}">
+            <div class="quarto-title-inner">
+                $if(report-number)$
+                    <span class="ppadem-pill">$report-number$</span>
+                $endif$
+                <h1 class="title">$title$</h1>
+                $if(subtitle)$
+                    <p class="subtitle lead">$subtitle$</p>
+                $endif$
+            </div>
+        </div>
+    </div>
+
+    $if(hide-description)$
+    $elseif(description)$
+        <div>
+            <div class="description">
+                $description$
+            </div>
+        </div>
+    $endif$
+
+    $title-metadata.html()$
+</header>

@@ -1,0 +1,23 @@
+title: "PPADEM Brief (PDF)"
+author: "PPADEM Project"
+version: "1.1.0"
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    typst:
+      template-partials:
+        - typst-template.typ
+        - typst-show.typ
+      format-resources:
+        - logo.png
+      filters:
+        - brief-components.lua
+      papersize: a4
+      margin:
+        x: 2cm
+        top: 2.6cm
+        bottom: 2.2cm
+      fontsize: 10.5pt
+      mainfont: Inter
+      shift-heading-level-by: -1
+      abstract-title: "Summary"

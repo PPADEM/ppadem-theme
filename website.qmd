@@ -94,6 +94,35 @@ Strengthening the link between citizens and political parties.
 :::
 :::
 
+## Team
+
+<!-- Add a photo to each person with ![](photo.jpg){fig-alt="Name"} on the first line. -->
+
+::: {.ppadem-team-grid}
+::: {.ppadem-person}
+**Team Member**
+Principal Investigator
+:::
+
+::: {.ppadem-person}
+**Team Member**
+Research Fellow
+:::
+
+::: {.ppadem-person}
+**Team Member**
+Project Manager
+:::
+:::
+
+::: {.ppadem-cta}
+### Work with us
+
+We partner with researchers, parties and electoral bodies across the continent.
+
+[Get in touch](mailto:contact@example.org){.btn}
+:::
+
 ::: {.placeholder-box}
 This section is a placeholder — replace with project-specific content.
 :::

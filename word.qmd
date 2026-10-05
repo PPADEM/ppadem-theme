@@ -1,0 +1,35 @@
+---
+title: "Working Paper Title"
+subtitle: "PPADEM — Political Parties in Africa & Democracy"
+author: "PPADEM Project"
+date: today
+date-format: long
+abstract: |
+  A short abstract. In Word this appears in a shaded box under the title.
+format: ppadem-word-docx
+---
+
+## Introduction
+
+Use this format when collaborators need to edit or comment in Microsoft Word.
+Headings, the title block, tables, captions and block quotes take the PPADEM
+styles from the reference document. Word does not support the HTML component
+classes (cards, stat strips and so on), so keep the content to plain Markdown.
+
+## Data
+
+| Region | Countries | Parties |
+|:-------|----------:|--------:|
+| West Africa | 9 | 30 |
+| East Africa | 7 | 22 |
+| Southern Africa | 9 | 28 |
+
+: Coverage by region {#tbl-coverage}
+
+@tbl-coverage shows coverage by region.
+
+> Parties are where democracy is organised, or where it fails.
+
+## Conclusion
+
+Summarise the argument here.
