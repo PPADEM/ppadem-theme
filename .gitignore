@@ -7,3 +7,5 @@
 
 # Test installs of the extensions (from `quarto add` inside this repo)
 _extensions/PPADEM/
+
+/.luarc.json
