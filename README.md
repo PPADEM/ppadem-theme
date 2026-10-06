@@ -10,7 +10,7 @@ Quarto themes and starter templates for the PPADEM project. Six formats are incl
 | --- | --- | --- |
 | **Website** | Quarto project sites and web pages | `ppadem-theme-html` |
 | **Report** | Standalone, self-contained HTML reports with numbered sections and a cover-style title block | `ppadem-report-html` |
-| **Presentation** | Reveal.js slide decks with title, section and closing slides | `ppadem-presentation-revealjs` |
+| **Slides** | Reveal.js slide decks (HTML, shown in a browser) with title, section and closing slides | `ppadem-slides-revealjs` |
 | **Brief** | Printable A4 PDF policy briefs (Typst, needs Quarto 1.4+) | `ppadem-brief-typst` |
 | **Word** | Word documents for collaborators who edit in Microsoft Word | `ppadem-word-docx` |
 | **PowerPoint** | PowerPoint decks for collaborators who edit in Microsoft PowerPoint | `ppadem-powerpoint-pptx` |
@@ -33,7 +33,7 @@ You need [Quarto](https://quarto.org/docs/get-started/) (1.3 or later) installed
    ```
 
    This installs the themes into `_extensions/` and adds a starter file for each
-   format: `website.qmd`, `report.qmd`, `presentation.qmd`, `brief.qmd`,
+   format: `website.qmd`, `report.qmd`, `slides.qmd`, `brief.qmd`,
    `word.qmd` and `powerpoint.qmd`. Delete the ones you don't need and replace the text with your own content.
 
    **Or install only the themes**, with no starter files:
@@ -105,7 +105,7 @@ important is red. Tables get a soft red header row in every format, Word include
 The palette is also available as CSS custom properties in the HTML formats,
 for example `style="color: var(--ppadem-teal)"`.
 
-### Presentation slides
+### Slides (Reveal.js)
 
 ```md
 ## Part one {.ppadem-section}          <!-- red section divider -->
@@ -114,6 +114,11 @@ for example `style="color: var(--ppadem-teal)"`.
 ```
 
 The logo, footer and slide number are hidden on section dividers.
+
+> **Renamed:** this format used to be `ppadem-presentation-revealjs` (starter
+> `presentation.qmd`). It was renamed so it isn't confused with the PowerPoint format.
+> In existing documents, change the format to `ppadem-slides-revealjs`, then delete the old
+> `_extensions/ppadem-presentation/` folder after updating with `quarto add PPADEM/ppadem-theme`.
 
 ### Report options
 
@@ -169,8 +174,8 @@ Quarto extensions must be self-contained:
 
 | Source | Used by |
 | --- | --- |
-| `_brand/ppadem-brand.scss` | Palette, fonts and shared components. Copied into the website, report and presentation extensions; its colours are also written into the brief's Typst template. |
-| `_brand/logo.png` | Copied into the presentation and brief extensions, and embedded in the report title block. |
+| `_brand/ppadem-brand.scss` | Palette, fonts and shared components. Copied into the website, report and slides extensions; its colours are also written into the brief's Typst template. |
+| `_brand/logo.png` | Copied into the slides and brief extensions, and embedded in the report title block. |
 | `_brand/templates/title-block.html.in` | The report cover. |
 | `tools/build-reference-docx.py` | The Word reference doc, plus the Word template and example in `office-templates/`. |
 | `tools/build-powerpoint.py` | The PowerPoint reference doc, plus the PowerPoint template and example in `office-templates/`. |

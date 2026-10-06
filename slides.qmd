@@ -1,11 +1,11 @@
 ---
 title: "PPADEM Research"
-subtitle: "PPADEM Project Presentation Template"
+subtitle: "PPADEM Project Slides Template"
 author: "PPADEM Project Team"
 institute: "Political Parties in Africa & Democracy"
 date: today
 date-format: long
-format: ppadem-presentation-revealjs
+format: ppadem-slides-revealjs
 ---
 
 ## Welcome to PPADEM

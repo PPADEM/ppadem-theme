@@ -30,9 +30,9 @@ LOGO = BRAND / "logo.png"
 TITLE_BLOCK_IN = BRAND / "templates" / "title-block.html.in"
 
 # Extensions that load the shared SCSS layer
-SCSS_TARGETS = ["ppadem-theme", "ppadem-report", "ppadem-presentation"]
+SCSS_TARGETS = ["ppadem-theme", "ppadem-report", "ppadem-slides"]
 # Extensions that ship their own copy of the logo
-LOGO_TARGETS = ["ppadem-presentation", "ppadem-brief"]
+LOGO_TARGETS = ["ppadem-slides", "ppadem-brief"]
 
 NOTICE = "GENERATED from {src} by tools/sync-brand.py; edit the source, not this copy."
 

@@ -56,7 +56,7 @@ jobs:
         run: |
           quarto render website.qmd
           quarto render report.qmd
-          quarto render presentation.qmd
+          quarto render slides.qmd
           quarto render word.qmd
           quarto render powerpoint.qmd
           quarto render brief.qmd
