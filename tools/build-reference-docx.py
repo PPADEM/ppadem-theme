@@ -26,7 +26,7 @@ from docx.oxml import OxmlElement, parse_xml
 from docx.oxml.ns import nsdecls, qn
 from docx.shared import Cm, Pt, RGBColor
 
-from office_common import FONT, LOGO, OFFICE, P, ROOT, brand_theme, pandoc_default, save_reproducibly
+from office_common import EU_LOGO, FONT, LOGO, OFFICE, P, ROOT, brand_theme, pandoc_default, save_reproducibly
 
 REFERENCE = ROOT / "_extensions" / "ppadem-word" / "ppadem-reference.docx"
 TEMPLATE = OFFICE / "PPADEM-document.dotx"
@@ -434,6 +434,14 @@ def cover(doc, label, title, subtitle, author, date):
     doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
 
 
+def funding(doc):
+    """The EU funding logo, centred at the end of the document."""
+    para = doc.add_paragraph(style="Body Text")
+    para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    para.paragraph_format.space_before = Pt(24)
+    para.add_run().add_picture(str(EU_LOGO), width=Cm(7.0))
+
+
 def build_template(doc):
     clear_body(doc)
     cover(doc, "[Document type]", "[Document title]", "[Subtitle]", "[Authors]", "[Date]")
@@ -443,6 +451,7 @@ def build_template(doc):
         "PPADEM Note, PPADEM Key Findings and more.]",
         style="Body Text",
     )
+    funding(doc)
     page_setup(doc, cover=True)
 
 
@@ -513,6 +522,9 @@ def build_example(doc):
     say(doc, "When you colour text, shapes or charts, pick from the Theme Colours row at the top "
              "of the colour menu: it holds the PPADEM red, teal, gold and grey. Charts inserted in "
              "Word use these colours automatically.")
+    say(doc, "Funding logo", "Heading 1")
+    say(doc, "End every document with the EU funding logo, as below. Keep it on the last page.")
+    funding(doc)
     page_setup(doc, cover=True)
 
 

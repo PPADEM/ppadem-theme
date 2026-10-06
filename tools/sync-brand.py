@@ -34,12 +34,19 @@ EXT = ROOT / "_extensions"
 
 BRAND_SCSS = BRAND / "ppadem-brand.scss"
 LOGO = BRAND / "logo.png"
+# "Funded by the European Union" / ERC logo, shown at the end of every document
+EU_LOGO = BRAND / "eu-logo.png"
+FUNDING_LUA = BRAND / "ppadem-funding.lua"
 TITLE_BLOCK_IN = BRAND / "templates" / "title-block.html.in"
 
 # Extensions that load the shared SCSS layer
 SCSS_TARGETS = ["ppadem-theme", "ppadem-report", "ppadem-slides"]
 # Extensions that ship their own copy of the logo
 LOGO_TARGETS = ["ppadem-slides", "ppadem-brief"]
+# Extensions that add the EU logo at the end with ppadem-funding.lua (the brief
+# does it in its Typst template instead, so it only needs the image)
+FUNDING_TARGETS = ["ppadem-theme", "ppadem-report", "ppadem-slides", "ppadem-word", "ppadem-powerpoint"]
+EU_LOGO_TARGETS = FUNDING_TARGETS + ["ppadem-brief"]
 # Extensions whose custom.scss gets a generated block of brand variables
 CUSTOM_SCSS_TARGETS = SCSS_TARGETS
 
@@ -114,6 +121,11 @@ def brief_template(path: Path) -> str:
     return with_block(path, "//", lines)
 
 
+def funding_lua() -> str:
+    notice = NOTICE.format(src="_brand/ppadem-funding.lua")
+    return f"-- {notice}\n{FUNDING_LUA.read_text()}"
+
+
 def title_block() -> str:
     logo = base64.b64encode(LOGO.read_bytes()).decode("ascii")
     body = TITLE_BLOCK_IN.read_text().replace("{{LOGO_BASE64}}", logo)
@@ -128,6 +140,10 @@ def outputs() -> dict:
         out[EXT / ext / "ppadem-brand.scss"] = scss_copy()
     for ext in LOGO_TARGETS:
         out[EXT / ext / "logo.png"] = LOGO.read_bytes()
+    for ext in EU_LOGO_TARGETS:
+        out[EXT / ext / "eu-logo.png"] = EU_LOGO.read_bytes()
+    for ext in FUNDING_TARGETS:
+        out[EXT / ext / "ppadem-funding.lua"] = funding_lua()
     for ext in CUSTOM_SCSS_TARGETS:
         path = EXT / ext / "custom.scss"
         out[path] = custom_scss(path)

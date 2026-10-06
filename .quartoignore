@@ -3,3 +3,4 @@ _brand/
 tools/
 .github/
 office-templates/
+justfile

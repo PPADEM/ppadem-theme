@@ -30,7 +30,7 @@ from pptx.parts.slide import SlideLayoutPart
 from pptx.dml.color import RGBColor
 from pptx.util import Pt
 
-from office_common import FONT, LOGO, OFFICE, P, ROOT, brand_theme, logo_ratio, pandoc_default, save_reproducibly
+from office_common import EU_LOGO, FONT, LOGO, OFFICE, P, ROOT, brand_theme, logo_ratio, pandoc_default, save_reproducibly
 
 REFERENCE = ROOT / "_extensions" / "ppadem-powerpoint" / "ppadem-reference.pptx"
 TEMPLATE = OFFICE / "PPADEM-presentation.potx"
@@ -41,6 +41,7 @@ SLIDE_W, SLIDE_H = 13.333, 7.5
 MARGIN = 0.6
 CONTENT_W = SLIDE_W - 2 * MARGIN
 LOGO_RATIO = logo_ratio()
+EU_LOGO_RATIO = logo_ratio(EU_LOGO)
 
 NS = (
     'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" '
@@ -109,10 +110,10 @@ class Shapes:
             f'<a:lstStyle/><a:p><a:pPr algn="{align}"/>{body}</a:p></p:txBody></p:sp>'
         )
 
-    def picture(self, name, rid, x, y, h):
-        w = h * LOGO_RATIO
+    def picture(self, name, rid, x, y, h, ratio=LOGO_RATIO, descr="PPADEM logo"):
+        w = h * ratio
         self.xml.append(
-            f'<p:pic><p:nvPicPr><p:cNvPr id="{self._id()}" name="{name}" descr="PPADEM logo"/>'
+            f'<p:pic><p:nvPicPr><p:cNvPr id="{self._id()}" name="{name}" descr="{descr}"/>'
             f'<p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr userDrawn="1"/>'
             f'</p:nvPicPr><p:blipFill><a:blip r:embed="{rid}"/><a:stretch><a:fillRect/></a:stretch>'
             f'</p:blipFill><p:spPr>{xfrm(x, y, w, h)}<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>'
@@ -315,7 +316,7 @@ def with_caption(content_ph, prompt):
     return build
 
 
-def layout_closing(s: Shapes, rid):
+def layout_closing(s: Shapes, rid, eu_rid):
     logo_h = 1.3
     s.picture("Logo", rid, (SLIDE_W - logo_h * LOGO_RATIO) / 2, 1.0, logo_h)
     s.placeholder("Title", 'type="title"', "Thank you", (MARGIN, 2.6, CONTENT_W, 1.2),
@@ -324,6 +325,10 @@ def layout_closing(s: Shapes, rid):
     s.placeholder("Text", 'type="body" idx="1"', "Contact details or next steps",
                   (1.6, 4.25, SLIDE_W - 3.2, 1.6), anchor="t", inset=False,
                   style=level1(20, fill="ppadem-gray", align="ctr"))
+    # EU funding logo: the closing slide ends every deck
+    eu_h = 1.0
+    s.picture("EU logo", eu_rid, (SLIDE_W - eu_h * EU_LOGO_RATIO) / 2, 6.0, eu_h, ratio=EU_LOGO_RATIO,
+              descr="Funded by the European Union. European Research Council")
 
 
 # (name, layout type, builder, background, show master shapes)
@@ -381,7 +386,11 @@ def build_layouts(prs):
             next_id += 1
         _, image_rid = part.get_or_add_image_part(str(LOGO))
         shapes = Shapes()
-        builder(shapes, image_rid)
+        if builder is layout_closing:
+            _, eu_rid = part.get_or_add_image_part(str(EU_LOGO))
+            builder(shapes, image_rid, eu_rid)
+        else:
+            builder(shapes, image_rid)
         part._element = parse_xml(layout_xml(name, kind, shapes, background, show_master))
         order.append(rid)
         # Drop the logo relationship from layouts that don't use it

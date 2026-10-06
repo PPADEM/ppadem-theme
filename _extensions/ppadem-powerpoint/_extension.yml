@@ -6,4 +6,5 @@ contributes:
   formats:
     pptx:
       reference-doc: ppadem-reference.pptx
+      filters: [ppadem-funding.lua]
       slide-level: 2

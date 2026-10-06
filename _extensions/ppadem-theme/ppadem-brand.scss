@@ -472,3 +472,17 @@ figcaption,
 
   p:last-child { margin-bottom: 0; }
 }
+
+/* ---------------- EU funding logo ---------------- */
+// Added at the end of every document by ppadem-funding.lua
+.ppadem-funding {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $ppadem-border;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}

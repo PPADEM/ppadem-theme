@@ -18,6 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 LOGO = ROOT / "_brand" / "logo.png"
+EU_LOGO = ROOT / "_brand" / "eu-logo.png"
 OFFICE = ROOT / "office-templates"
 
 
@@ -39,9 +40,9 @@ P = {name: value.lstrip("#").upper() for name, value in _BRAND.palette().items()
 FONT = _BRAND.fonts()["office"]
 
 
-def logo_ratio() -> float:
-    """Width / height of _brand/logo.png, read from its PNG header."""
-    width, height = struct.unpack(">II", LOGO.read_bytes()[16:24])
+def logo_ratio(path: Path = LOGO) -> float:
+    """Width / height of a PNG (default _brand/logo.png), read from its header."""
+    width, height = struct.unpack(">II", path.read_bytes()[16:24])
     return width / height
 
 

@@ -6,6 +6,7 @@ contributes:
   formats:
     docx:
       reference-doc: ppadem-reference.docx
+      filters: [ppadem-funding.lua]
       toc: true
       number-sections: true
       fig-cap-location: bottom

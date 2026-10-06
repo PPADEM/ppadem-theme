@@ -20,3 +20,4 @@ contributes:
       filters:
         - fix-slide-headers.lua
         - ppadem-slides.lua
+        - ppadem-funding.lua

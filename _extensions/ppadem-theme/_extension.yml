@@ -11,3 +11,4 @@ contributes:
       smooth-scroll: true
       link-external-icon: true
       link-external-newwindow: true
+      filters: [ppadem-funding.lua]

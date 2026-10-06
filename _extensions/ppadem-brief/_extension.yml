@@ -10,6 +10,7 @@ contributes:
         - typst-show.typ
       format-resources:
         - logo.png
+        - eu-logo.png
       filters:
         - brief-components.lua
       papersize: a4

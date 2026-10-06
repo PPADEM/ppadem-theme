@@ -167,6 +167,15 @@ $slide-number-color: $ppadem-grey;
   a { font-weight: 600; }
 }
 
+// EU funding logo, added to the last slide by ppadem-funding.lua
+.reveal .ppadem-funding {
+  margin-top: 1.5em;
+  padding-top: 0;
+  border-top: none;
+
+  img { width: 280px !important; }
+}
+
 /* ---------------- Footer, logo, progress ---------------- */
 .reveal .slide-logo {
   max-height: 44px !important;

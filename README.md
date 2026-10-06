@@ -19,6 +19,10 @@ All six use the official PPADEM brand palette (red `#990000`, teal `#298c8c`,
 gold `#f1a226`, grey `#b8b8b8`), the PPADEM logo and the Inter typeface (Arial in
 Word and PowerPoint).
 
+Every format ends with the EU / ERC funding logo ("Funded by the European Union"),
+added automatically: after the last section of a website page, report, brief or Word
+document, on the last Reveal.js slide, and on a final slide of its own in PowerPoint.
+
 > **Not using Quarto?** Ready-made PowerPoint and Word templates with the same branding
 > are in [`office-templates/`](office-templates/), with instructions for using them.
 
@@ -136,7 +140,7 @@ the title. Sections marked `{.appendix}` are moved to the end of the report.
 
 The brief uses Inter if it is installed, otherwise Arial. Install
 [Inter](https://rsms.me/inter/) for the intended look. When you render, Quarto copies
-`logo.png` next to your document so Typst can find it.
+`logo.png` and `eu-logo.png` next to your document so Typst can find them.
 
 ### Word
 
@@ -182,6 +186,8 @@ format, including the Word and PowerPoint templates.
 | The Office font | `$ppadem-font-office` in `_brand/ppadem-brand.scss` | Word, PowerPoint, and the brief's fallback font |
 | Shared components (cards, pills, callouts, spacing, corners) | The rest of `_brand/ppadem-brand.scss` | Website, report and slides |
 | The logo | Replace `_brand/logo.png` | Every format and both Office templates |
+| The EU funding logo | Replace `_brand/eu-logo.png` | The end of every format and both Office templates |
+| How the EU logo is added | `_brand/ppadem-funding.lua` (the brief: its `typst-template.typ`) | Website, report, slides, Word and PowerPoint |
 | The report cover | `_brand/templates/title-block.html.in` | The report |
 | One format's layout or look | That extension's `custom.scss`, `_extension.yml` or Lua/Typst file | That format only |
 | Word or PowerPoint layouts and styles | `tools/build-reference-docx.py` or `tools/build-powerpoint.py` | Word or PowerPoint only |
@@ -199,7 +205,7 @@ everywhere straight away, but only appears once a format uses it.
 
 Don't edit these by hand; they are overwritten on every sync:
 
-- `ppadem-brand.scss` and `logo.png` inside the extensions, and the report's `title-block.html`
+- `ppadem-brand.scss`, `logo.png`, `eu-logo.png` and `ppadem-funding.lua` inside the extensions, and the report's `title-block.html`
 - The `BEGIN GENERATED BRAND VALUES` … `END GENERATED BRAND VALUES` blocks at the top of
   each `custom.scss`, in `ppadem-slides.lua` and in the brief's `typst-template.typ`.
   These define the brand values so the rest of the file can use them. The rest of each
@@ -226,4 +232,5 @@ they are not copied into projects created with `quarto use template`.
 ## License
 
 The source code in this repository is licensed under the MIT License (see [LICENSE](LICENSE)). The PPADEM logo
-is the property of the PPADEM project and is not covered by the MIT licence.
+is the property of the PPADEM project, and the EU emblem and ERC logo belong to their
+owners; none of them is covered by the MIT licence.

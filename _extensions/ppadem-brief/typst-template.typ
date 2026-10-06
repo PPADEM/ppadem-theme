@@ -278,4 +278,10 @@
   }
 
   if cols == 1 { doc } else { columns(cols, gutter: 16pt, doc) }
+
+  // EU funding logo at the end of the brief
+  v(1.5em)
+  line(length: 100%, stroke: 0.5pt + ppadem-border)
+  v(0.5em)
+  align(center, image("eu-logo.png", height: 1.8cm))
 }

@@ -34,7 +34,7 @@ new, untitled presentation with a title slide, so the template itself is never c
 | Title Only | A title and free space for your own shapes, charts or stat tiles |
 | Content with Caption / Picture with Caption | A large chart or picture with a short key message beside it |
 | Blank | Logo and footer only |
-| Closing | "Thank you" and contact details |
+| Closing | "Thank you", contact details and the EU funding logo. End every deck with it |
 
 **Change a slide's layout:** *Home → Layout*.
 
@@ -51,6 +51,7 @@ slide afterwards: slides with hand-placed text may need tidying.
 
 **Start a new document:** double-click `PPADEM-document.dotx`. Word opens a new, untitled
 document with a cover page and contents page. Replace the text in [square brackets].
+The EU funding logo is at the end of the document: keep it as the last thing in the document.
 
 **Format with styles, not by hand.** Click in a paragraph and choose a style from *Home →
 Styles*. To see every style, open the Styles pane (the small arrow at the bottom-right of the

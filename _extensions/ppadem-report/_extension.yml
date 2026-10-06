@@ -8,6 +8,7 @@ contributes:
       embed-resources: true
       theme: [yeti, ppadem-brand.scss, custom.scss]
       template-partials: [title-block.html]
+      filters: [ppadem-funding.lua]
       # Banner colours are set in custom.scss from the brand palette
       title-block-banner: true
       toc: true

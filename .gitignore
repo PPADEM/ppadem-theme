@@ -17,3 +17,6 @@ __pycache__/
 _extensions/PPADEM/
 
 /.luarc.json
+
+# Copied next to brief.qmd when it renders (the root logo.png is tracked)
+/eu-logo.png
