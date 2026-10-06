@@ -46,6 +46,9 @@ $ppadem-white: #ffffff !default;
 
 // ---------------- Typography ----------------
 $ppadem-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+// Font for Word and PowerPoint, which have no font fallback, so it must be
+// installed everywhere. Also the brief's fallback when Inter isn't installed.
+$ppadem-font-office: "Arial" !default;
 $font-family-sans-serif: $ppadem-font-sans !default;
 
 // ---------------- Shape ----------------

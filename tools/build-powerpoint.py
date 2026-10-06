@@ -30,7 +30,7 @@ from pptx.parts.slide import SlideLayoutPart
 from pptx.dml.color import RGBColor
 from pptx.util import Pt
 
-from office_common import LOGO, OFFICE, P, ROOT, brand_theme, pandoc_default, save_reproducibly
+from office_common import FONT, LOGO, OFFICE, P, ROOT, brand_theme, logo_ratio, pandoc_default, save_reproducibly
 
 REFERENCE = ROOT / "_extensions" / "ppadem-powerpoint" / "ppadem-reference.pptx"
 TEMPLATE = OFFICE / "PPADEM-presentation.potx"
@@ -40,7 +40,7 @@ EXAMPLE = OFFICE / "PPADEM-presentation-example.pptx"
 SLIDE_W, SLIDE_H = 13.333, 7.5
 MARGIN = 0.6
 CONTENT_W = SLIDE_W - 2 * MARGIN
-LOGO_RATIO = 259 / 229  # width / height of _brand/logo.png
+LOGO_RATIO = logo_ratio()
 
 NS = (
     'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" '
@@ -168,7 +168,7 @@ def body_level(lvl, mar, size, bullet, fill, space=10):
         f'<a:lvl{lvl}pPr marL="{emu(mar)}" indent="{-emu(0.3)}" algn="l" defTabSz="914400" '
         f'rtl="0" eaLnBrk="1" latinLnBrk="0" hangingPunct="1">'
         f'<a:lnSpc><a:spcPct val="100000"/></a:lnSpc><a:spcBef><a:spcPts val="{space * 100}"/></a:spcBef>'
-        f'<a:buClr><a:schemeClr val="{fill}"/></a:buClr><a:buFont typeface="Arial"/>'
+        f'<a:buClr><a:schemeClr val="{fill}"/></a:buClr><a:buFont typeface="{FONT}"/>'
         f'<a:buChar char="{bullet}"/><a:defRPr sz="{size * 100}" kern="1200">'
         f'<a:solidFill><a:schemeClr val="tx1"/></a:solidFill><a:latin typeface="+mn-lt"/>'
         f'<a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:lvl{lvl}pPr>'

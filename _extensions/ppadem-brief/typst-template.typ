@@ -1,8 +1,9 @@
 // PPADEM brief: Typst template (PDF output).
-// The palette block below is generated from _brand/ppadem-brand.scss by
-// tools/sync-brand.py; edit the colours there.
+// The palette and font block below is generated from _brand/ppadem-brand.scss
+// by tools/sync-brand.py; edit the colours and fonts there.
 
-// BEGIN GENERATED PALETTE
+// BEGIN GENERATED BRAND VALUES
+// GENERATED from _brand/ppadem-brand.scss by tools/sync-brand.py; edit the source, not this copy.
 #let ppadem-red = rgb("#990000")
 #let ppadem-red-hover = rgb("#b30000")
 #let ppadem-red-dark = rgb("#660000")
@@ -24,7 +25,8 @@
 #let ppadem-border-strong = rgb("#d1d5db")
 #let ppadem-text = rgb("#212529")
 #let ppadem-white = rgb("#ffffff")
-// END GENERATED PALETTE
+#let ppadem-fonts = ("Inter", "Arial")
+// END GENERATED BRAND VALUES
 
 #let ppadem-accent(name) = {
   if name == "teal" { ppadem-teal }
@@ -182,7 +184,7 @@
   report-number: none,
   lang: "en",
   region: "GB",
-  font: ("Inter", "Arial"),
+  font: ppadem-fonts,
   fontsize: 10.5pt,
   sectionnumbering: none,
   cols: 1,

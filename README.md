@@ -169,18 +169,45 @@ switch layouts in PowerPoint after rendering (*Home → Layout*).
 
 ## Editing the brand (maintainers)
 
-The shared design lives in `_brand/` and is copied into each extension, because
-Quarto extensions must be self-contained:
+**Change the brand in `_brand/`, not in the extensions.** Quarto extensions must be
+self-contained, so `tools/sync-brand.py` copies the brand from `_brand/` into every
+format, including the Word and PowerPoint templates.
 
-| Source | Used by |
-| --- | --- |
-| `_brand/ppadem-brand.scss` | Palette, fonts and shared components. Copied into the website, report and slides extensions; its colours are also written into the brief's Typst template. |
-| `_brand/logo.png` | Copied into the slides and brief extensions, and embedded in the report title block. |
-| `_brand/templates/title-block.html.in` | The report cover. |
-| `tools/build-reference-docx.py` | The Word reference doc, plus the Word template and example in `office-templates/`. |
-| `tools/build-powerpoint.py` | The PowerPoint reference doc, plus the PowerPoint template and example in `office-templates/`. |
+### What to edit where
 
-Each extension's `custom.scss` holds only format-specific rules.
+| To change | Edit | It reaches |
+| --- | --- | --- |
+| A colour | The `$ppadem-…: #hex` lines in `_brand/ppadem-brand.scss` | Every format: website, report, slides, brief, Word and PowerPoint (Quarto formats and `office-templates/`) |
+| The web font | `$ppadem-font-sans` in `_brand/ppadem-brand.scss` | Website, report and slides; its first font is also the brief's main font |
+| The Office font | `$ppadem-font-office` in `_brand/ppadem-brand.scss` | Word, PowerPoint, and the brief's fallback font |
+| Shared components (cards, pills, callouts, spacing, corners) | The rest of `_brand/ppadem-brand.scss` | Website, report and slides |
+| The logo | Replace `_brand/logo.png` | Every format and both Office templates |
+| The report cover | `_brand/templates/title-block.html.in` | The report |
+| One format's layout or look | That extension's `custom.scss`, `_extension.yml` or Lua/Typst file | That format only |
+| Word or PowerPoint layouts and styles | `tools/build-reference-docx.py` or `tools/build-powerpoint.py` | Word or PowerPoint only |
+
+Format files should only hold what is specific to that format, and should use brand
+values rather than typing colours out: `$ppadem-red` in SCSS, `ppadem["red"]` in
+`ppadem-slides.lua`, `ppadem-red` in the brief's Typst template, and `P["ppadem-red"]` in
+the Office build scripts.
+
+Colour **values** can change freely, but don't rename or remove a `$ppadem-…` colour
+without updating the files that use it, or the build fails. A new colour is available
+everywhere straight away, but only appears once a format uses it.
+
+### What is generated
+
+Don't edit these by hand; they are overwritten on every sync:
+
+- `ppadem-brand.scss` and `logo.png` inside the extensions, and the report's `title-block.html`
+- The `BEGIN GENERATED BRAND VALUES` … `END GENERATED BRAND VALUES` blocks at the top of
+  each `custom.scss`, in `ppadem-slides.lua` and in the brief's `typst-template.typ`.
+  These define the brand values so the rest of the file can use them. The rest of each
+  file is hand-written.
+- The Word and PowerPoint files: `ppadem-reference.docx`, `ppadem-reference.pptx` and
+  everything in `office-templates/` except its README
+
+### Publishing a change
 
 **You don't need to run anything after editing `_brand/`.** Push to GitHub and the
 *Sync brand* action (`.github/workflows/sync-brand.yml`) regenerates the copies,
@@ -188,15 +215,13 @@ rebuilds the Word and PowerPoint files, commits the result back to your branch a
 `github-actions[bot]`, and renders every starter to check nothing broke. Run
 `git pull` before your next push so you pick up that commit.
 
-To preview a brand change locally before pushing, you can still run
-`python3 tools/sync-brand.py` (add `--office` to rebuild the Word and PowerPoint
-files, which needs Quarto and `pip install python-docx python-pptx`).
+To preview a brand change locally before pushing, run `python3 tools/sync-brand.py`
+(add `--office` to rebuild the Word and PowerPoint files, which needs Quarto and
+`pip install python-docx python-pptx`). `python3 tools/sync-brand.py --check` reports
+anything out of date without changing it.
 
-The Office files are generated, so don't edit them in Word or PowerPoint: change the
-build scripts instead.
-
-`_brand/`, `tools/`, `.github/` and `office-templates/` are listed in `.quartoignore`, so they are not
-copied into projects created with `quarto use template`.
+`_brand/`, `tools/`, `.github/` and `office-templates/` are listed in `.quartoignore`, so
+they are not copied into projects created with `quarto use template`.
 
 ## License
 

@@ -1,7 +1,43 @@
 /*-- scss:defaults --*/
 
 // Report-specific layer. Palette, fonts and shared components come from
-// ppadem-brand.scss (generated from _brand/).
+// ppadem-brand.scss (generated from _brand/). Use the brand variables below
+// rather than literal colours, so a change in _brand/ reaches this file.
+
+// BEGIN GENERATED BRAND VALUES
+// GENERATED from _brand/ppadem-brand.scss by tools/sync-brand.py; edit the source, not this copy.
+$ppadem-red: #990000 !default;
+$ppadem-red-hover: #b30000 !default;
+$ppadem-red-dark: #660000 !default;
+$ppadem-red-soft: #fdf2f2 !default;
+$ppadem-red-border: #f2d0d0 !default;
+$ppadem-teal: #298c8c !default;
+$ppadem-teal-dark: #1f6b6b !default;
+$ppadem-teal-soft: #e8f5f5 !default;
+$ppadem-teal-border: #b2dede !default;
+$ppadem-gold: #f1a226 !default;
+$ppadem-gold-dark: #b8740b !default;
+$ppadem-gold-soft: #fef6e9 !default;
+$ppadem-gold-border: #fbdca8 !default;
+$ppadem-grey: #b8b8b8 !default;
+$ppadem-gray: #555e68 !default;
+$ppadem-gray-light: #f8f9fa !default;
+$ppadem-slate: #24292e !default;
+$ppadem-border: #e5e7eb !default;
+$ppadem-border-strong: #d1d5db !default;
+$ppadem-text: #212529 !default;
+$ppadem-white: #ffffff !default;
+$ppadem-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$ppadem-font-office: "Arial" !default;
+$ppadem-radius: 6px !default;
+$ppadem-radius-lg: 8px !default;
+$ppadem-accent-width: 48px !default;
+$ppadem-accent-bg: $ppadem-red !default;
+// END GENERATED BRAND VALUES
+
+// Cover banner (title-block-banner: true in _extension.yml)
+$title-banner-bg: $ppadem-red-soft;
+$title-banner-color: $ppadem-slate;
 
 /*-- scss:rules --*/
 

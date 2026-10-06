@@ -11,7 +11,14 @@ Usage:
     python3 tools/sync-brand.py --office  # also rebuild the Word and PowerPoint files
     python3 tools/sync-brand.py --docx    # also rebuild the Word files only
 
-Edit files in _brand/, never the generated copies in _extensions/.
+Edit files in _brand/, never the generated copies in _extensions/. Besides
+whole-file copies, the script regenerates marked blocks inside hand-written
+files (between "BEGIN GENERATED" and "END GENERATED" comments), so those files
+can use the brand values:
+
+    custom.scss (website, report, slides)   every $ppadem-* variable
+    ppadem-slides.lua                       the palette as a Lua table
+    typst-template.typ (brief)              the palette and fonts
 """
 
 import argparse
@@ -33,6 +40,8 @@ TITLE_BLOCK_IN = BRAND / "templates" / "title-block.html.in"
 SCSS_TARGETS = ["ppadem-theme", "ppadem-report", "ppadem-slides"]
 # Extensions that ship their own copy of the logo
 LOGO_TARGETS = ["ppadem-slides", "ppadem-brief"]
+# Extensions whose custom.scss gets a generated block of brand variables
+CUSTOM_SCSS_TARGETS = SCSS_TARGETS
 
 NOTICE = "GENERATED from {src} by tools/sync-brand.py; edit the source, not this copy."
 
@@ -51,17 +60,58 @@ def palette() -> dict:
     return dict(pattern.findall(BRAND_SCSS.read_text()))
 
 
-PALETTE_BEGIN = "// BEGIN GENERATED PALETTE\n"
-PALETTE_END = "// END GENERATED PALETTE"
+def brand_variables() -> list:
+    """Every one-line `$ppadem-…: …;` definition in the shared SCSS, in order."""
+    return re.findall(r"^\$ppadem-[a-z-]+:.*;$", BRAND_SCSS.read_text(), re.M)
+
+
+def fonts() -> dict:
+    """The web font (first family of $ppadem-font-sans) and the Office font."""
+    text = BRAND_SCSS.read_text()
+
+    def first_family(name):
+        value = re.search(rf"^\${name}:\s*([^,;!]+)", text, re.M).group(1)
+        return value.strip().strip('"').strip("'")
+
+    return {"web": first_family("ppadem-font-sans"), "office": first_family("ppadem-font-office")}
+
+
+def with_block(path: Path, comment: str, lines: list) -> str:
+    """path's text with the block between its BEGIN/END GENERATED markers replaced."""
+    begin = f"{comment} BEGIN GENERATED BRAND VALUES"
+    end = f"{comment} END GENERATED BRAND VALUES"
+    text = path.read_text()
+    if begin not in text:
+        sys.exit(f"{path.relative_to(ROOT)} is missing its '{begin}' marker")
+    head, rest = text.split(begin, 1)
+    _, tail = rest.split(end, 1)
+    notice = f"{comment} {NOTICE.format(src='_brand/ppadem-brand.scss')}"
+    return head + "\n".join([begin, notice, *lines, end]) + tail
+
+
+def custom_scss(path: Path) -> str:
+    """A format's custom.scss with every brand variable defined at the top.
+
+    Quarto emits a later layer's defaults *before* the brand layer's, so
+    without this block custom.scss couldn't use $ppadem-* in scss:defaults.
+    The definitions are all !default, so they match the brand layer exactly.
+    """
+    return with_block(path, "//", brand_variables())
+
+
+def slides_lua(path: Path) -> str:
+    lines = ["local ppadem = {"]
+    lines += [f'  ["{name[len("ppadem-"):]}"] = "{value.lower()}",' for name, value in palette().items()]
+    lines.append("}")
+    return with_block(path, "--", lines)
 
 
 def brief_template(path: Path) -> str:
-    """The brief's Typst template with its palette block regenerated."""
-    text = path.read_text()
-    head, rest = text.split(PALETTE_BEGIN, 1)
-    _, tail = rest.split(PALETTE_END, 1)
+    """The brief's Typst template with its palette and fonts regenerated."""
     lines = [f'#let {name} = rgb("{value.lower()}")' for name, value in palette().items()]
-    return head + PALETTE_BEGIN + "\n".join(lines) + "\n" + PALETTE_END + tail
+    f = fonts()
+    lines.append(f'#let ppadem-fonts = ("{f["web"]}", "{f["office"]}")')
+    return with_block(path, "//", lines)
 
 
 def title_block() -> str:
@@ -78,6 +128,11 @@ def outputs() -> dict:
         out[EXT / ext / "ppadem-brand.scss"] = scss_copy()
     for ext in LOGO_TARGETS:
         out[EXT / ext / "logo.png"] = LOGO.read_bytes()
+    for ext in CUSTOM_SCSS_TARGETS:
+        path = EXT / ext / "custom.scss"
+        out[path] = custom_scss(path)
+    lua = EXT / "ppadem-slides" / "ppadem-slides.lua"
+    out[lua] = slides_lua(lua)
     brief = EXT / "ppadem-brief" / "typst-template.typ"
     out[brief] = brief_template(brief)
     out[EXT / "ppadem-report" / "title-block.html"] = title_block()

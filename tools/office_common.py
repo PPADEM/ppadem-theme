@@ -7,8 +7,10 @@ on every push).
 """
 
 import importlib.util
+import io
 import os
 import re
+import struct
 import subprocess
 import tempfile
 import zipfile
@@ -18,19 +20,29 @@ ROOT = Path(__file__).resolve().parent.parent
 LOGO = ROOT / "_brand" / "logo.png"
 OFFICE = ROOT / "office-templates"
 
-# Word and PowerPoint have no font fallback, so use a font every collaborator has.
-FONT = "Arial"
 
-
-def load_palette() -> dict:
-    """The brand palette as {"ppadem-red": "990000", ...} (no leading #)."""
+def _sync_brand():
+    """tools/sync-brand.py, which reads the brand values from _brand/."""
     spec = importlib.util.spec_from_file_location("sync_brand", ROOT / "tools" / "sync-brand.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    return {name: value.lstrip("#").upper() for name, value in module.palette().items()}
+    return module
 
 
-P = load_palette()
+_BRAND = _sync_brand()
+
+# The brand palette as {"ppadem-red": "990000", ...} (no leading #)
+P = {name: value.lstrip("#").upper() for name, value in _BRAND.palette().items()}
+
+# $ppadem-font-office: Word and PowerPoint have no font fallback, so this
+# must be a font every collaborator has.
+FONT = _BRAND.fonts()["office"]
+
+
+def logo_ratio() -> float:
+    """Width / height of _brand/logo.png, read from its PNG header."""
+    width, height = struct.unpack(">II", LOGO.read_bytes()[16:24])
+    return width / height
 
 
 def pandoc_default(name: str, dest: Path) -> Path:
@@ -100,6 +112,33 @@ TEMPLATE_TYPES = {
 }
 
 
+FIXED_DATE = "2000-01-01T00:00:00Z"
+
+
+def _zip_fixed(entries) -> bytes:
+    """A zip of (name, data) pairs with fixed timestamps."""
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as dst:
+        for name, data in entries:
+            fixed = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+            fixed.compress_type = zipfile.ZIP_DEFLATED
+            dst.writestr(fixed, data)
+    return buffer.getvalue()
+
+
+def _fixed_workbook(data: bytes) -> bytes:
+    """An embedded chart workbook with its creation time pinned (python-pptx
+    stamps the current time, which would make every build differ)."""
+    entries = []
+    with zipfile.ZipFile(io.BytesIO(data)) as src:
+        for item in src.infolist():
+            content = src.read(item.filename)
+            if item.filename == "docProps/core.xml":
+                content = re.sub(rb"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ", FIXED_DATE.encode(), content)
+            entries.append((item.filename, content))
+    return _zip_fixed(entries)
+
+
 def save_reproducibly(doc, path: Path, template: bool = False):
     """Save a python-docx/python-pptx document with fixed zip timestamps.
 
@@ -110,7 +149,8 @@ def save_reproducibly(doc, path: Path, template: bool = False):
         raw = Path(tmp) / "raw.zip"
         doc.save(str(raw))
         path.parent.mkdir(parents=True, exist_ok=True)
-        with zipfile.ZipFile(raw) as src, zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as dst:
+        entries = []
+        with zipfile.ZipFile(raw) as src:
             for item in src.infolist():
                 data = src.read(item.filename)
                 if template and item.filename == "[Content_Types].xml":
@@ -118,7 +158,8 @@ def save_reproducibly(doc, path: Path, template: bool = False):
                     for document, tmpl in TEMPLATE_TYPES.items():
                         text = text.replace(document, tmpl)
                     data = text.encode("utf-8")
-                fixed = zipfile.ZipInfo(item.filename, date_time=(1980, 1, 1, 0, 0, 0))
-                fixed.compress_type = zipfile.ZIP_DEFLATED
-                dst.writestr(fixed, data)
+                if item.filename.endswith(".xlsx"):
+                    data = _fixed_workbook(data)
+                entries.append((item.filename, data))
+        path.write_bytes(_zip_fixed(entries))
     print(f"wrote {path.relative_to(ROOT)}")
