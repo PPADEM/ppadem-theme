@@ -8,7 +8,8 @@ into every extension that needs them and committed alongside it.
 Usage:
     python3 tools/sync-brand.py           # write all generated files
     python3 tools/sync-brand.py --check   # exit 1 if anything is out of date
-    python3 tools/sync-brand.py --docx    # also rebuild the Word reference doc
+    python3 tools/sync-brand.py --office  # also rebuild the Word and PowerPoint files
+    python3 tools/sync-brand.py --docx    # also rebuild the Word files only
 
 Edit files in _brand/, never the generated copies in _extensions/.
 """
@@ -92,7 +93,10 @@ def read(path: Path, like):
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--check", action="store_true", help="report stale files without writing")
-    parser.add_argument("--docx", action="store_true", help="also rebuild the Word reference doc")
+    parser.add_argument("--docx", action="store_true", help="also rebuild the Word files")
+    parser.add_argument("--office", action="store_true",
+                        help="also rebuild the Word and PowerPoint files (Quarto reference docs "
+                             "and office-templates/)")
     args = parser.parse_args()
 
     stale = []
@@ -118,8 +122,10 @@ def main() -> int:
         print("Brand files are in sync.")
         return 0
 
-    if args.docx:
+    if args.docx or args.office:
         subprocess.run([sys.executable, str(ROOT / "tools" / "build-reference-docx.py")], check=True)
+    if args.office:
+        subprocess.run([sys.executable, str(ROOT / "tools" / "build-powerpoint.py")], check=True)
 
     if not stale:
         print("Brand files already in sync.")

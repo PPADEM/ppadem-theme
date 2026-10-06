@@ -5,7 +5,11 @@
 !_extensions/**/*.html
 *.pdf
 *.docx
+*.pptx
 !_extensions/**/*.docx
+!_extensions/**/*.pptx
+!office-templates/*.docx
+!office-templates/*.pptx
 **/*.quarto_ipynb
 __pycache__/
 
