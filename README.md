@@ -4,7 +4,7 @@
 
 # PPADEM Quarto Theme
 
-Quarto themes and starter templates for the PPADEM project. Five formats are included:
+Quarto themes and starter templates for the PPADEM project. Six formats are included:
 
 | Format | Use it for | Format name |
 | --- | --- | --- |
@@ -13,9 +13,14 @@ Quarto themes and starter templates for the PPADEM project. Five formats are inc
 | **Presentation** | Reveal.js slide decks with title, section and closing slides | `ppadem-presentation-revealjs` |
 | **Brief** | Printable A4 PDF policy briefs (Typst, needs Quarto 1.4+) | `ppadem-brief-typst` |
 | **Word** | Word documents for collaborators who edit in Microsoft Word | `ppadem-word-docx` |
+| **PowerPoint** | PowerPoint decks for collaborators who edit in Microsoft PowerPoint | `ppadem-powerpoint-pptx` |
 
-All five use the official PPADEM brand palette (red `#990000`, teal `#298c8c`,
-gold `#f1a226`, grey `#b8b8b8`), the Inter typeface and the PPADEM logo.
+All six use the official PPADEM brand palette (red `#990000`, teal `#298c8c`,
+gold `#f1a226`, grey `#b8b8b8`), the PPADEM logo and the Inter typeface (Arial in
+Word and PowerPoint).
+
+> **Not using Quarto?** Ready-made PowerPoint and Word templates with the same branding
+> are in [`office-templates/`](office-templates/), with instructions for using them.
 
 ## Quick start
 
@@ -28,8 +33,8 @@ You need [Quarto](https://quarto.org/docs/get-started/) (1.3 or later) installed
    ```
 
    This installs the themes into `_extensions/` and adds a starter file for each
-   format: `website.qmd`, `report.qmd`, `presentation.qmd`, `brief.qmd` and
-   `word.qmd`. Delete the ones you don't need and replace the text with your own content.
+   format: `website.qmd`, `report.qmd`, `presentation.qmd`, `brief.qmd`,
+   `word.qmd` and `powerpoint.qmd`. Delete the ones you don't need and replace the text with your own content.
 
    **Or install only the themes**, with no starter files:
 
@@ -134,6 +139,29 @@ The Word format uses Arial (Word has no font fallback, so a universally
 installed font is safer than Inter). The HTML component classes don't apply in
 Word, so keep Word documents to plain Markdown.
 
+The PPADEM paragraph styles from the Word template are available as custom styles:
+
+```md
+::: {custom-style="PPADEM Key Findings"}
+First finding
+
+Second finding
+:::
+```
+
+The styles are `PPADEM Executive Summary`, `PPADEM Key Findings`, `PPADEM Note`,
+`PPADEM Warning`, `PPADEM Important`, `PPADEM Pull Quote`, `PPADEM Quote Attribution`
+and `PPADEM Label`.
+
+### PowerPoint
+
+The PowerPoint format uses the same slide master as the
+[PowerPoint template](office-templates/). A level-1 heading (`# Part one`) makes a red
+section divider and each level-2 heading (`## Slide title`) starts a new slide. Use
+`:::: {.columns}` for two-column slides. As with Word, keep to plain Markdown: the HTML
+components, the teal/gold dividers and the closing slide aren't available, but you can
+switch layouts in PowerPoint after rendering (*Home → Layout*).
+
 ## Editing the brand (maintainers)
 
 The shared design lives in `_brand/` and is copied into each extension, because
@@ -144,20 +172,25 @@ Quarto extensions must be self-contained:
 | `_brand/ppadem-brand.scss` | Palette, fonts and shared components. Copied into the website, report and presentation extensions; its colours are also written into the brief's Typst template. |
 | `_brand/logo.png` | Copied into the presentation and brief extensions, and embedded in the report title block. |
 | `_brand/templates/title-block.html.in` | The report cover. |
+| `tools/build-reference-docx.py` | The Word reference doc, plus the Word template and example in `office-templates/`. |
+| `tools/build-powerpoint.py` | The PowerPoint reference doc, plus the PowerPoint template and example in `office-templates/`. |
 
 Each extension's `custom.scss` holds only format-specific rules.
 
 **You don't need to run anything after editing `_brand/`.** Push to GitHub and the
 *Sync brand* action (`.github/workflows/sync-brand.yml`) regenerates the copies,
-rebuilds the Word reference document, commits the result back to your branch as
+rebuilds the Word and PowerPoint files, commits the result back to your branch as
 `github-actions[bot]`, and renders every starter to check nothing broke. Run
 `git pull` before your next push so you pick up that commit.
 
 To preview a brand change locally before pushing, you can still run
-`python3 tools/sync-brand.py` (add `--docx` to rebuild the Word document, which
-needs `pip install python-docx`).
+`python3 tools/sync-brand.py` (add `--office` to rebuild the Word and PowerPoint
+files, which needs Quarto and `pip install python-docx python-pptx`).
 
-`_brand/`, `tools/` and `.github/` are listed in `.quartoignore`, so they are not
+The Office files are generated, so don't edit them in Word or PowerPoint: change the
+build scripts instead.
+
+`_brand/`, `tools/`, `.github/` and `office-templates/` are listed in `.quartoignore`, so they are not
 copied into projects created with `quarto use template`.
 
 ## License

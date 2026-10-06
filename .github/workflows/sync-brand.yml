@@ -1,8 +1,9 @@
 name: Sync brand
 
 # On every push, copy the shared brand from _brand/ into each extension
-# (tools/sync-brand.py), rebuild the Word reference doc, and commit any changes
-# back to the branch. Then render every starter to check nothing is broken.
+# (tools/sync-brand.py), rebuild the Word and PowerPoint files (Quarto reference
+# docs and office-templates/), and commit any changes back to the branch. Then
+# render every starter to check nothing is broken.
 # Pushes made with GITHUB_TOKEN don't trigger workflows, so this can't loop.
 
 on:
@@ -32,15 +33,15 @@ jobs:
 
       - name: Regenerate brand files
         run: |
-          pip install python-docx
-          python3 tools/sync-brand.py --docx
+          pip install python-docx python-pptx
+          python3 tools/sync-brand.py --office
 
       - name: Commit regenerated files
         # Pull requests (possibly from forks) can't be pushed to; the push to
         # the branch itself handles those.
         if: github.event_name != 'pull_request'
         run: |
-          git add _extensions
+          git add _extensions office-templates
           if git diff --cached --quiet; then
             echo "Brand files already in sync."
             exit 0
@@ -57,4 +58,5 @@ jobs:
           quarto render report.qmd
           quarto render presentation.qmd
           quarto render word.qmd
+          quarto render powerpoint.qmd
           quarto render brief.qmd

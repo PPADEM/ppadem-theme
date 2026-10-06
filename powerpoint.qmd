@@ -1,0 +1,51 @@
+---
+title: "PPADEM Research"
+subtitle: "PPADEM Project PowerPoint Template"
+author: "PPADEM Project Team"
+date: today
+date-format: long
+format: ppadem-powerpoint-pptx
+---
+
+# Our approach
+
+## Welcome to PPADEM
+
+Political Parties and Democracy in Africa (PPADEM) is a collaborative multi-year
+research project on the role of political parties in shaping democracy across Africa.
+
+- 80 political parties
+- 25 countries
+- 6 active workstreams
+
+## Two columns
+
+:::: {.columns}
+
+::: {.column}
+**Research**
+
+Comparative analysis of party systems, party finance and electoral law.
+:::
+
+::: {.column}
+**Engagement**
+
+Working with parties, parliaments and civil society.
+:::
+
+::::
+
+## Coverage by region
+
+| Region | Countries | Parties |
+|:-------|----------:|--------:|
+| West Africa | 9 | 30 |
+| East Africa | 7 | 22 |
+| Southern Africa | 9 | 28 |
+
+# Next steps
+
+## Thank you
+
+Questions and discussion
