@@ -216,69 +216,29 @@ def add_box_style(styles, name, accent, fill, text="ppadem-text", bold=False):
     return style
 
 
-def key_findings_numbering(doc, style_id: str) -> int:
-    """A decimal list bound to the Key Findings style; returns its numId."""
-    numbering = doc.part.numbering_part.element
-    abstract_ids = [int(a.get(qn("w:abstractNumId"))) for a in numbering.findall(qn("w:abstractNum"))]
-    num_ids = [int(n.get(qn("w:numId"))) for n in numbering.findall(qn("w:num"))]
-    abstract_id, num_id = max(abstract_ids, default=0) + 1, max(num_ids, default=0) + 1
-    abstract = parse_xml(
-        f'<w:abstractNum {nsdecls("w")} w:abstractNumId="{abstract_id}">'
-        f'<w:multiLevelType w:val="singleLevel"/><w:lvl w:ilvl="0"><w:start w:val="1"/>'
-        f'<w:numFmt w:val="decimal"/><w:pStyle w:val="{style_id}"/><w:lvlText w:val="%1."/>'
-        f'<w:lvlJc w:val="left"/><w:pPr><w:ind w:left="680" w:hanging="400"/></w:pPr>'
-        f'<w:rPr><w:b/><w:color w:val="{P["ppadem-teal"]}"/></w:rPr></w:lvl></w:abstractNum>'
-    )
-    first_num = numbering.find(qn("w:num"))
-    if first_num is not None:
-        first_num.addprevious(abstract)
-    else:
-        numbering.append(abstract)
-    numbering.append(parse_xml(
-        f'<w:num {nsdecls("w")} w:numId="{num_id}"><w:abstractNumId w:val="{abstract_id}"/></w:num>'
-    ))
-    return num_id
-
-
 def add_ppadem_styles(doc):
-    s = doc.styles
-    add_box_style(s, "PPADEM Executive Summary", "ppadem-red", "ppadem-red-soft", text="ppadem-slate")
-    findings = add_box_style(s, "PPADEM Key Findings", "ppadem-teal", "ppadem-teal-soft")
-    num_id = key_findings_numbering(doc, findings.style_id)
-    num_pr = parse_xml(f'<w:numPr {nsdecls("w")}><w:numId w:val="{num_id}"/></w:numPr>')
-    insert_ppr(findings.element.get_or_add_pPr(), num_pr)
-    # The list indent comes from the numbering definition, not the box indent
-    findings.paragraph_format.left_indent = None
-    add_box_style(s, "PPADEM Note", "ppadem-teal", "ppadem-teal-soft")
-    add_box_style(s, "PPADEM Warning", "ppadem-gold", "ppadem-gold-soft")
-    add_box_style(s, "PPADEM Important", "ppadem-red", "ppadem-red-soft")
+    add_box_style(doc.styles, "PPADEM Note", "ppadem-teal", "ppadem-teal-soft")
+    add_box_style(doc.styles, "PPADEM Warning", "ppadem-gold", "ppadem-gold-soft")
 
-    quote = s.add_style("PPADEM Pull Quote", WD_STYLE_TYPE.PARAGRAPH)
-    quote.base_style = s["Body Text"]
-    set_font(quote, size=14, colour="ppadem-slate", italic=True)
-    paragraph_border(quote, "left", "ppadem-red", 32, space=12)
-    quote.paragraph_format.left_indent = Cm(0.6)
-    quote.paragraph_format.space_before = Pt(12)
-    quote.paragraph_format.space_after = Pt(2)
-    quote.paragraph_format.keep_with_next = True
-    quote.quick_style = True
 
-    attribution = s.add_style("PPADEM Quote Attribution", WD_STYLE_TYPE.PARAGRAPH)
-    attribution.base_style = s["Body Text"]
-    set_font(attribution, size=9.5, colour="ppadem-gray", bold=True)
-    attribution.paragraph_format.left_indent = Cm(0.6)
-    attribution.paragraph_format.space_after = Pt(12)
-    attribution.next_paragraph_style = s["Body Text"]
-    quote.next_paragraph_style = attribution
+# The styles shown in Home → Styles. Everything else (Pandoc's own styles, which
+# Quarto output needs) is hidden until a document uses it.
+GALLERY = {
+    "Normal", "Body Text", "Title", "Subtitle",
+    "Heading 1", "Heading 2", "Heading 3", "Heading 4",
+    "PPADEM Note", "PPADEM Warning", "Caption",
+}
 
-    label = s.add_style("PPADEM Label", WD_STYLE_TYPE.PARAGRAPH)
-    label.base_style = s["Body Text"]
-    set_font(label, size=8.5, colour="ppadem-red", bold=True)
-    label.font.all_caps = True
-    label.paragraph_format.space_before = Pt(10)
-    label.paragraph_format.space_after = Pt(3)
-    label.paragraph_format.keep_with_next = True
-    label.quick_style = True
+
+def tidy_gallery(doc):
+    for style in doc.styles:
+        shown = style.name in GALLERY
+        style.quick_style = shown
+        if style.name in ("Normal", "Default Paragraph Font", "Table") or shown:
+            style.hidden = False
+        else:
+            style.hidden = True
+            style.unhide_when_used = True
 
 
 # ---------------------------------------------------------------------------
@@ -315,10 +275,13 @@ def build_styles(doc):
     paragraph_border(s["Heading 1"], "bottom", "ppadem-red-border", 8)
     set_font(s["Heading 2"], size=13, colour="ppadem-slate", bold=True)
     s["Heading 2"].paragraph_format.space_before = Pt(14)
-    for level in range(3, 7):
-        set_font(s[f"Heading {level}"], size=11, colour="ppadem-slate", bold=True, italic=False)
+    set_font(s["Heading 3"], size=11.5, colour="ppadem-teal", bold=True, italic=False)
+    # Heading 5 and 6 only come from Quarto output; they match Heading 4
+    for level in range(4, 7):
+        set_font(s[f"Heading {level}"], size=10.5, colour="ppadem-slate", bold=True, italic=True)
     for level in range(1, 7):
-        set_font(s[f"Heading {level} Char"], colour="ppadem-red-dark" if level == 1 else "ppadem-slate")
+        colour = {1: "ppadem-red-dark", 3: "ppadem-teal"}.get(level, "ppadem-slate")
+        set_font(s[f"Heading {level} Char"], colour=colour)
     set_font(s["TOC Heading"], size=16, colour="ppadem-red-dark", bold=True)
 
     # Pressing Enter after a heading or the title block continues in body text
@@ -335,6 +298,7 @@ def build_styles(doc):
     style_table(s["Table"])
 
     add_ppadem_styles(doc)
+    tidy_gallery(doc)
 
     # Theme colours and fonts: the colour picker shows the PPADEM palette
     theme = doc.part.part_related_by(RT.THEME)
@@ -410,16 +374,15 @@ def brand_rule(doc):
     row.append(parse_xml(f'<w:trHeight {nsdecls("w")} w:val="80" w:hRule="exact"/>'))
 
 
-def cover(doc, label, title, subtitle, author, date):
+def cover(doc, title, subtitle, author, date):
     doc.add_paragraph().add_run().add_picture(str(LOGO), height=Cm(2.6))
-    lead = doc.add_paragraph(label, style="PPADEM Label")
-    lead.paragraph_format.space_before = Pt(150)
     block = [
         doc.add_paragraph(title, style="Title"),
         doc.add_paragraph(subtitle, style="Subtitle"),
         doc.add_paragraph(author, style="Author"),
         doc.add_paragraph(date, style="Date"),
     ]
+    block[0].paragraph_format.space_before = Pt(160)
     # A red bar down the left of the title block, as on the title slide
     for para in block:
         paragraph_border(para, "left", "ppadem-red", 48, space=12)
@@ -444,11 +407,11 @@ def funding(doc):
 
 def build_template(doc):
     clear_body(doc)
-    cover(doc, "[Document type]", "[Document title]", "[Subtitle]", "[Authors]", "[Date]")
+    cover(doc, "[Document title]", "[Subtitle]", "[Authors]", "[Date]")
     doc.add_paragraph("[Introduction]", style="Heading 1")
     doc.add_paragraph(
-        "[Start writing here. Apply PPADEM styles from Home → Styles: headings, "
-        "PPADEM Note, PPADEM Key Findings and more.]",
+        "[Start writing here. Apply styles from Home → Styles: Heading 1–4, "
+        "PPADEM Note and PPADEM Warning.]",
         style="Body Text",
     )
     funding(doc)
@@ -461,7 +424,7 @@ def say(doc, text, style="Body Text"):
 
 def build_example(doc):
     clear_body(doc)
-    cover(doc, "Guide", "Using the PPADEM Word template",
+    cover(doc, "Using the PPADEM Word template",
           "How to write branded documents with Word styles", "PPADEM Project Team", "October 2026")
 
     say(doc, "Getting started", "Heading 1")
@@ -471,38 +434,27 @@ def build_example(doc):
              "bottom-right of the Styles group on Windows, or Format → Style on a Mac).")
     say(doc, "To start your own document, double-click PPADEM-document.dotx. Word opens a new "
              "untitled copy, so the template itself is never changed.")
-    say(doc, "PPADEM Executive Summary", "PPADEM Label")
-    say(doc, "This box uses the PPADEM Executive Summary style. Use it for a short summary at "
-             "the start of a report.", "PPADEM Executive Summary")
-    say(doc, "Consecutive paragraphs in the same box style join into one box.",
-        "PPADEM Executive Summary")
+    say(doc, "The Styles gallery holds only what you need: Title and Subtitle, Heading 1 to "
+             "Heading 4, Body Text, Caption, and two callout boxes.")
 
     say(doc, "Headings", "Heading 1")
     say(doc, "Use Heading 1 for main sections. It gets the red rule underneath and appears in "
              "the table of contents.")
     say(doc, "Heading 2 for subsections", "Heading 2")
-    say(doc, "Heading 2 and Heading 3 are slate grey. Press Enter after a heading and Word "
-             "switches back to Body Text automatically.")
+    say(doc, "Heading 2 is slate grey. Press Enter after any heading and Word switches back to "
+             "Body Text automatically.")
     say(doc, "Heading 3 for smaller divisions", "Heading 3")
-    say(doc, "After adding or renaming headings, right-click the table of contents and choose "
-             "Update Field.")
+    say(doc, "Heading 3 is teal.")
+    say(doc, "Heading 4 for the smallest divisions", "Heading 4")
+    say(doc, "Heading 4 is italic. After adding or renaming headings, right-click the table of "
+             "contents and choose Update Field.")
 
-    say(doc, "Boxes and callouts", "Heading 1")
-    say(doc, "Key findings", "PPADEM Label")
-    for finding in (
-        "Use the PPADEM Key Findings style for a numbered list of findings.",
-        "Each paragraph is numbered automatically.",
-        "To restart numbering in a new box, right-click the number and choose Restart at 1.",
-    ):
-        say(doc, finding, "PPADEM Key Findings")
-    say(doc, "PPADEM Note: teal, for background information or tips.", "PPADEM Note")
-    say(doc, "PPADEM Warning: gold, for caveats and things to watch out for.", "PPADEM Warning")
-    say(doc, "PPADEM Important: red, for the one thing a reader must not miss.", "PPADEM Important")
-    say(doc, "PPADEM Pull Quote: “Parties are where democracy is organised, or where it fails.”",
-        "PPADEM Pull Quote")
-    say(doc, "— PPADEM Quote Attribution", "PPADEM Quote Attribution")
-    say(doc, "Block Text is a quieter teal quote style for longer quotations from interviews or "
-             "documents.", "Block Text")
+    say(doc, "Callouts", "Heading 1")
+    say(doc, "PPADEM Note: a teal box for background information, tips or a short summary.",
+        "PPADEM Note")
+    say(doc, "Consecutive paragraphs in the same box style join into one box.", "PPADEM Note")
+    say(doc, "PPADEM Warning: a gold box for caveats and things to watch out for.",
+        "PPADEM Warning")
 
     say(doc, "Tables and figures", "Heading 1")
     say(doc, "Insert a table, then choose the PPADEM “Table” style from Table Design → Table Styles "

@@ -2,8 +2,8 @@
 -- this filter) at the end of the document.
 --
 -- HTML formats embed the image as a data URI, so nothing is copied next to the
--- document; Word and PowerPoint take it from Pandoc's media bag. In Reveal.js
--- the logo ends up on the last slide; PowerPoint gets a final slide of its own.
+-- page; Word and PowerPoint take it from Pandoc's media bag. PowerPoint gets a
+-- final slide of its own.
 
 local ALT = "Funded by the European Union. European Research Council"
 

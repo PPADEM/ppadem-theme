@@ -5,13 +5,13 @@
 # PPADEM PowerPoint and Word templates
 
 Branded templates for anyone who works in Microsoft PowerPoint or Word rather than
-Quarto. They use the same colours, fonts and logo as the PPADEM website, reports and slides.
+Quarto. They use the same colours and logo as the PPADEM website.
 
 | File | What it is |
 | --- | --- |
 | [`PPADEM-presentation.potx`](PPADEM-presentation.potx) | **PowerPoint template.** Start every new deck from this. |
-| [`PPADEM-presentation-example.pptx`](PPADEM-presentation-example.pptx) | An example deck showing every slide layout, a chart, a table and stat tiles. |
-| [`PPADEM-document.dotx`](PPADEM-document.dotx) | **Word template** with a cover page, contents page and PPADEM styles. |
+| [`PPADEM-presentation-example.pptx`](PPADEM-presentation-example.pptx) | An example deck showing every layout, a chart, a table and stat tiles. |
+| [`PPADEM-document.dotx`](PPADEM-document.dotx) | **Word template** with a cover page, contents page, headings and two callout boxes. |
 | [`PPADEM-document-example.docx`](PPADEM-document-example.docx) | An example document showing every style and how to apply it. |
 
 To download a file, click its name above, then click the **Download raw file** button
@@ -29,10 +29,9 @@ new, untitled presentation with a title slide, so the template itself is never c
 | Title Slide | The first slide: title, subtitle, presenter and date |
 | Title and Content | Most slides: a title and bullet points, a table, chart or picture |
 | Section Header | A red divider between parts of a talk |
-| Section Header (Teal) / (Gold) | Alternative divider colours |
 | Two Content / Comparison | Two columns side by side (Comparison adds a heading over each) |
 | Title Only | A title and free space for your own shapes, charts or stat tiles |
-| Content with Caption / Picture with Caption | A large chart or picture with a short key message beside it |
+| Content with Caption | A large chart, table or picture with a short key message beside it |
 | Blank | Logo and footer only |
 | Closing | "Thank you", contact details and the EU funding logo. End every deck with it |
 
@@ -54,21 +53,16 @@ document with a cover page and contents page. Replace the text in [square bracke
 The EU funding logo is at the end of the document: keep it as the last thing in the document.
 
 **Format with styles, not by hand.** Click in a paragraph and choose a style from *Home →
-Styles*. To see every style, open the Styles pane (the small arrow at the bottom-right of the
-Styles group on Windows, or *Format → Style* on a Mac).
+Styles*. The gallery holds only the PPADEM styles:
 
 | Style | Use it for |
 | --- | --- |
-| Title, Subtitle, Author, Date | The cover page |
-| Heading 1, 2, 3 | Section headings (they build the table of contents) |
+| Title, Subtitle | The cover page |
+| Heading 1, 2, 3, 4 | Section headings. Heading 1 has a red rule, Heading 3 is teal and Heading 4 italic. Headings 1–3 build the table of contents |
 | Body Text | Normal paragraphs |
-| PPADEM Executive Summary | A red-tinted summary box |
-| PPADEM Key Findings | A numbered teal box. Right-click a number → *Restart at 1* to start a new list |
-| PPADEM Note / Warning / Important | Teal, gold and red callout boxes |
-| PPADEM Pull Quote + PPADEM Quote Attribution | A large quote with its source |
-| Block Text | Longer quotations |
-| PPADEM Label | A small red capitalised label above a box |
-| Table Caption / Image Caption | Captions above tables and below figures |
+| PPADEM Note | A teal box for background information, tips or a short summary |
+| PPADEM Warning | A gold box for caveats |
+| Caption | Captions for tables and figures |
 
 **Tables:** insert a table, then choose the *Table* style from *Table Design → Table Styles*
 (under *Custom*, at the top of the list).
@@ -94,7 +88,7 @@ same when you share them.
 
 ## Updates
 
-The templates are generated from the same brand files as the Quarto themes, so they stay in
+The templates are generated from the same brand files as the Quarto formats, so they stay in
 step. If the brand changes, download the latest version from this folder.
 
 ---

@@ -265,14 +265,12 @@ def layout_title(s: Shapes, rid):
     s.text("Footer", 0.8, 6.85, 5, 0.3, "PPADEM Project")
 
 
-def layout_section(text_fill):
-    def build(s: Shapes, rid):
-        s.placeholder("Title", 'type="title"', "Section title", (0.8, 2.3, 11.7, 1.6),
-                      anchor="b", inset=False, style=level1(44, bold=True, fill=text_fill))
-        s.rect("Accent bar", 0.8, 4.05, 0.9, 0.07, text_fill)
-        s.placeholder("Text", 'type="body" idx="1"', "Optional one-line description",
-                      (0.8, 4.3, 11.7, 1.4), anchor="t", inset=False, style=level1(20, fill=text_fill))
-    return build
+def layout_section(s: Shapes, rid):
+    s.placeholder("Title", 'type="title"', "Section title", (0.8, 2.3, 11.7, 1.6),
+                  anchor="b", inset=False, style=level1(44, bold=True, fill="bg1"))
+    s.rect("Accent bar", 0.8, 4.05, 0.9, 0.07, "bg1")
+    s.placeholder("Text", 'type="body" idx="1"', "Optional one-line description",
+                  (0.8, 4.3, 11.7, 1.4), anchor="t", inset=False, style=level1(20, fill="bg1"))
 
 
 def layout_content(s: Shapes, rid):
@@ -305,15 +303,14 @@ def layout_blank(s: Shapes, rid):
     pass
 
 
-def with_caption(content_ph, prompt):
-    def build(s: Shapes, rid):
-        s.placeholder("Title", 'type="title"', "Click to add title", (MARGIN, 0.6, 4.2, 1.3),
-                      anchor="b", inset=False, style=level1(24))
-        title_rule(s, y=2.0, w=4.2)
-        s.placeholder("Caption", 'type="body" sz="half" idx="2"', "Caption or key message",
-                      (MARGIN, 2.25, 4.2, 4.35), inset=False, style=level1(16))
-        s.placeholder("Content", content_ph, prompt, (5.2, 0.6, SLIDE_W - MARGIN - 5.2, 6.0))
-    return build
+def layout_caption(s: Shapes, rid):
+    s.placeholder("Title", 'type="title"', "Click to add title", (MARGIN, 0.6, 4.2, 1.3),
+                  anchor="b", inset=False, style=level1(24))
+    title_rule(s, y=2.0, w=4.2)
+    s.placeholder("Caption", 'type="body" sz="half" idx="2"', "Caption or key message",
+                  (MARGIN, 2.25, 4.2, 4.35), inset=False, style=level1(16))
+    s.placeholder("Content", 'idx="1"', "Click to add a table, chart or text",
+                  (5.2, 0.6, SLIDE_W - MARGIN - 5.2, 6.0))
 
 
 def layout_closing(s: Shapes, rid, eu_rid):
@@ -332,18 +329,18 @@ def layout_closing(s: Shapes, rid, eu_rid):
 
 
 # (name, layout type, builder, background, show master shapes)
-# The first seven names are the ones Pandoc looks for; keep them.
+# Pandoc picks layouts by name: Title Slide, Title and Content, Section Header,
+# Two Content, Comparison, Content with Caption and Blank. Keep those names, or
+# Quarto output falls back to Pandoc's unbranded layouts. Comparison and Content
+# with Caption are used for slides that mix text with columns, images or tables.
 LAYOUTS = [
     ("Title Slide", "title", layout_title, None, False),
     ("Title and Content", "obj", layout_content, None, True),
-    ("Section Header", "secHead", layout_section("bg1"), "accent1", False),
-    ("Section Header (Teal)", None, layout_section("bg1"), "accent2", False),
-    ("Section Header (Gold)", None, layout_section("accent5"), "accent3", False),
+    ("Section Header", "secHead", layout_section, "accent1", False),
     ("Two Content", "twoObj", layout_two, None, True),
     ("Comparison", "twoTxTwoObj", layout_comparison, None, True),
     ("Title Only", "titleOnly", layout_title_only, None, True),
-    ("Content with Caption", "objTx", with_caption('idx="1"', "Click to add a table, chart or text"), None, True),
-    ("Picture with Caption", "picTx", with_caption('type="pic" idx="1"', "Click the icon to add a picture"), None, True),
+    ("Content with Caption", "objTx", layout_caption, None, True),
     ("Blank", "blank", layout_blank, None, True),
     ("Closing", None, layout_closing, "ppadem-red-soft", False),
 ]
@@ -543,8 +540,6 @@ def build_example(prs):
     add(prs, "Content with Caption", "Content with Caption",
         ["Large content area", "Paste a chart, table or picture here"],
         "Use the narrow column for the key message and the large area for a chart or table.")
-    add(prs, "Section Header (Teal)", "Teal section divider", "An alternative colour for a second part")
-    add(prs, "Section Header (Gold)", "Gold section divider", "And a third, for appendices or Q&A")
     add(prs, "Closing", "Thank you", ["Questions and discussion", "[Your name] · [email address]"])
 
 

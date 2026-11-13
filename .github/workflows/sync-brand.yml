@@ -41,7 +41,7 @@ jobs:
         # the branch itself handles those.
         if: github.event_name != 'pull_request'
         run: |
-          git add _extensions office-templates
+          git add _extensions website office-templates
           if git diff --cached --quiet; then
             echo "Brand files already in sync."
             exit 0
@@ -54,9 +54,6 @@ jobs:
 
       - name: Render starter templates
         run: |
-          quarto render website.qmd
-          quarto render report.qmd
-          quarto render slides.qmd
+          quarto render website
           quarto render word.qmd
           quarto render powerpoint.qmd
-          quarto render brief.qmd

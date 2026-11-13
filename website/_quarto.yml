@@ -1,0 +1,37 @@
+# PPADEM website project. Render it with `quarto render`, or preview it while
+# you edit with `quarto preview` (run both from inside this folder).
+
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "PPADEM Data Science"
+  description: "Training, guidance and tools from the PPADEM data science team."
+  # Set this to the published address so links and social previews work
+  site-url: https://ppadem.github.io/
+  favicon: logo.png
+  search: true
+  page-navigation: true
+
+  navbar:
+    logo: logo.png
+    logo-alt: "PPADEM logo"
+    # Pages of this site. Add a line for each new .qmd file.
+    left:
+      - text: Home
+        href: index.qmd
+    # Links out of the site
+    right:
+      - icon: globe
+        text: PPADEM Hub
+        href: https://ppadem.github.io/
+      - icon: github
+        href: https://github.com/PPADEM
+        aria-label: PPADEM on GitHub
+
+  page-footer:
+    left: "**PPADEM** — Political Parties and Democracy in Africa. An ERC Synergy Project (2026–2032)."
+    right: "Part of the [PPADEM](https://ppadem.github.io/) data science collection."
+
+format: ppadem-theme-html
