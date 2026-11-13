@@ -1,5 +1,6 @@
 .DS_Store
-/.quarto/
+.quarto/
+_site/
 *_files/
 *.html
 !_extensions/**/*.html
@@ -18,5 +19,3 @@ _extensions/PPADEM/
 
 /.luarc.json
 
-# Copied next to brief.qmd when it renders (the root logo.png is tracked)
-/eu-logo.png

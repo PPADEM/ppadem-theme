@@ -13,8 +13,26 @@ format: ppadem-word-docx
 
 Use this format when collaborators need to edit or comment in Microsoft Word.
 Headings, the title block, tables, captions and block quotes take the PPADEM
-styles from the reference document. Word does not support the HTML component
-classes (cards, stat strips and so on), so keep the content to plain Markdown.
+styles as `office-templates/PPADEM-document.dotx`.
+Word does not support the HTML component classes (cards, stat strips and so
+on), so keep the content to plain Markdown plus the two callout styles:
+
+::: {custom-style="PPADEM Note"}
+PPADEM Note: a teal box for background information, tips or a short summary.
+:::
+
+::: {custom-style="PPADEM Warning"}
+PPADEM Warning: a gold box for caveats and things to watch out for.
+:::
+
+### A subsection
+
+`##` becomes Heading 1 in Word, `###` Heading 2, `####` Heading 3 and
+`#####` Heading 4.
+
+#### Heading 3 is teal
+
+##### Heading 4 is italic
 
 ## Data
 

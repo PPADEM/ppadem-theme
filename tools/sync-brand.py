@@ -11,18 +11,10 @@ Usage:
     python3 tools/sync-brand.py --office  # also rebuild the Word and PowerPoint files
     python3 tools/sync-brand.py --docx    # also rebuild the Word files only
 
-Edit files in _brand/, never the generated copies in _extensions/. Besides
-whole-file copies, the script regenerates marked blocks inside hand-written
-files (between "BEGIN GENERATED" and "END GENERATED" comments), so those files
-can use the brand values:
-
-    custom.scss (website, report, slides)   every $ppadem-* variable
-    ppadem-slides.lua                       the palette as a Lua table
-    typst-template.typ (brief)              the palette and fonts
+Edit files in _brand/, never the generated copies in _extensions/ or website/.
 """
 
 import argparse
-import base64
 import re
 import subprocess
 import sys
@@ -31,24 +23,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 BRAND = ROOT / "_brand"
 EXT = ROOT / "_extensions"
+WEBSITE = ROOT / "website"
 
 BRAND_SCSS = BRAND / "ppadem-brand.scss"
 LOGO = BRAND / "logo.png"
 # "Funded by the European Union" / ERC logo, shown at the end of every document
 EU_LOGO = BRAND / "eu-logo.png"
 FUNDING_LUA = BRAND / "ppadem-funding.lua"
-TITLE_BLOCK_IN = BRAND / "templates" / "title-block.html.in"
 
-# Extensions that load the shared SCSS layer
-SCSS_TARGETS = ["ppadem-theme", "ppadem-report", "ppadem-slides"]
-# Extensions that ship their own copy of the logo
-LOGO_TARGETS = ["ppadem-slides", "ppadem-brief"]
-# Extensions that add the EU logo at the end with ppadem-funding.lua (the brief
-# does it in its Typst template instead, so it only needs the image)
-FUNDING_TARGETS = ["ppadem-theme", "ppadem-report", "ppadem-slides", "ppadem-word", "ppadem-powerpoint"]
-EU_LOGO_TARGETS = FUNDING_TARGETS + ["ppadem-brief"]
-# Extensions whose custom.scss gets a generated block of brand variables
-CUSTOM_SCSS_TARGETS = SCSS_TARGETS
+# Extensions that load the brand stylesheet
+SCSS_TARGETS = ["ppadem-theme"]
+# Extensions that add the EU logo at the end with ppadem-funding.lua
+FUNDING_TARGETS = ["ppadem-theme", "ppadem-word", "ppadem-powerpoint"]
 
 NOTICE = "GENERATED from {src} by tools/sync-brand.py; edit the source, not this copy."
 
@@ -67,11 +53,6 @@ def palette() -> dict:
     return dict(pattern.findall(BRAND_SCSS.read_text()))
 
 
-def brand_variables() -> list:
-    """Every one-line `$ppadem-…: …;` definition in the shared SCSS, in order."""
-    return re.findall(r"^\$ppadem-[a-z-]+:.*;$", BRAND_SCSS.read_text(), re.M)
-
-
 def fonts() -> dict:
     """The web font (first family of $ppadem-font-sans) and the Office font."""
     text = BRAND_SCSS.read_text()
@@ -83,54 +64,9 @@ def fonts() -> dict:
     return {"web": first_family("ppadem-font-sans"), "office": first_family("ppadem-font-office")}
 
 
-def with_block(path: Path, comment: str, lines: list) -> str:
-    """path's text with the block between its BEGIN/END GENERATED markers replaced."""
-    begin = f"{comment} BEGIN GENERATED BRAND VALUES"
-    end = f"{comment} END GENERATED BRAND VALUES"
-    text = path.read_text()
-    if begin not in text:
-        sys.exit(f"{path.relative_to(ROOT)} is missing its '{begin}' marker")
-    head, rest = text.split(begin, 1)
-    _, tail = rest.split(end, 1)
-    notice = f"{comment} {NOTICE.format(src='_brand/ppadem-brand.scss')}"
-    return head + "\n".join([begin, notice, *lines, end]) + tail
-
-
-def custom_scss(path: Path) -> str:
-    """A format's custom.scss with every brand variable defined at the top.
-
-    Quarto emits a later layer's defaults *before* the brand layer's, so
-    without this block custom.scss couldn't use $ppadem-* in scss:defaults.
-    The definitions are all !default, so they match the brand layer exactly.
-    """
-    return with_block(path, "//", brand_variables())
-
-
-def slides_lua(path: Path) -> str:
-    lines = ["local ppadem = {"]
-    lines += [f'  ["{name[len("ppadem-"):]}"] = "{value.lower()}",' for name, value in palette().items()]
-    lines.append("}")
-    return with_block(path, "--", lines)
-
-
-def brief_template(path: Path) -> str:
-    """The brief's Typst template with its palette and fonts regenerated."""
-    lines = [f'#let {name} = rgb("{value.lower()}")' for name, value in palette().items()]
-    f = fonts()
-    lines.append(f'#let ppadem-fonts = ("{f["web"]}", "{f["office"]}")')
-    return with_block(path, "//", lines)
-
-
 def funding_lua() -> str:
     notice = NOTICE.format(src="_brand/ppadem-funding.lua")
     return f"-- {notice}\n{FUNDING_LUA.read_text()}"
-
-
-def title_block() -> str:
-    logo = base64.b64encode(LOGO.read_bytes()).decode("ascii")
-    body = TITLE_BLOCK_IN.read_text().replace("{{LOGO_BASE64}}", logo)
-    notice = NOTICE.format(src="_brand/templates/title-block.html.in")
-    return f"$-- {notice}\n{body}"
 
 
 def outputs() -> dict:
@@ -138,20 +74,16 @@ def outputs() -> dict:
     out = {}
     for ext in SCSS_TARGETS:
         out[EXT / ext / "ppadem-brand.scss"] = scss_copy()
-    for ext in LOGO_TARGETS:
-        out[EXT / ext / "logo.png"] = LOGO.read_bytes()
-    for ext in EU_LOGO_TARGETS:
-        out[EXT / ext / "eu-logo.png"] = EU_LOGO.read_bytes()
     for ext in FUNDING_TARGETS:
+        out[EXT / ext / "eu-logo.png"] = EU_LOGO.read_bytes()
         out[EXT / ext / "ppadem-funding.lua"] = funding_lua()
-    for ext in CUSTOM_SCSS_TARGETS:
-        path = EXT / ext / "custom.scss"
-        out[path] = custom_scss(path)
-    lua = EXT / "ppadem-slides" / "ppadem-slides.lua"
-    out[lua] = slides_lua(lua)
-    brief = EXT / "ppadem-brief" / "typst-template.typ"
-    out[brief] = brief_template(brief)
-    out[EXT / "ppadem-report" / "title-block.html"] = title_block()
+
+    # The website starter is a Quarto project of its own, and Quarto only looks
+    # for extensions inside the project, so it carries a copy of the format.
+    theme = EXT / "ppadem-theme"
+    for src in sorted(theme.iterdir()):
+        out[WEBSITE / "_extensions" / "ppadem-theme" / src.name] = out.get(src) or src.read_bytes()
+    out[WEBSITE / "logo.png"] = LOGO.read_bytes()
     return out
 
 
